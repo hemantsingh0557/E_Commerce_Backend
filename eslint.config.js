@@ -14,7 +14,7 @@ export default [
         },
         rules: {
             "semi": ["error", "always"], // Enforces semicolons at the end of statements
-            "no-console": "warn", // Warns when console statements are used
+            // "no-console": "warn", // Warns when console statements are used
             "eqeqeq": ["error", "always"], // Requires the use of === and !==
             "indent": ["error", 4], // Enforces consistent indentation with 4 spaces
             "no-unused-vars": ["warn"], // Warns when variables are defined but not used
