@@ -16,6 +16,18 @@ export function generateSessionId() {
 }
 
 
+export function generateOrderNumber() 
+{
+    const timestamp = new Date().getTime(); 
+    const randomPart = Math.floor(Math.random() * 10000); 
+    return `${timestamp}-${randomPart}`;
+}
+
+
+
+export function calculateTotalAmount(lockedProducts) {
+    return lockedProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
+}
 
 
 

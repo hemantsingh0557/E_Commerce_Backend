@@ -9,8 +9,6 @@ const PaymentSchema = new mongoose.Schema({
     paymentDetails: { type: String, required: true },
 }, { timestamps: true });
 
-
-
 export const PaymentModel = mongoose.model('Payment', PaymentSchema);
 
 

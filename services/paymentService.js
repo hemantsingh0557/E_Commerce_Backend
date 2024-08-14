@@ -1,4 +1,5 @@
 import { PaymentModel } from "../models/PaymentModel";
+import { PAYMENT_MESSAGE } from "../utils/constants";
 
 
 
@@ -21,6 +22,22 @@ paymentService.savePaymentMethodDetails = async (userId, paymentMethod, paymentD
     }
 };
 
+
+
+
+
+paymentService.processPayment = async (userId, sessionId, payment) => {
+    try 
+    {
+        // Implement actual payment gateway integration here
+        // For now, assume payment is always successful
+        return { success: true, message: PAYMENT_MESSAGE.PAYMENT_SUCCESSFUL };
+    } 
+    catch (error) 
+    {
+        return { success: false, message: error.message };
+    }
+};
 
 
 
