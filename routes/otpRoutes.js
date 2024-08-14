@@ -21,7 +21,7 @@ const otpRoutes = [
             .required()
         } ,
         controller : otpController.sentOtp 
-    } ,
+    } ,   
     {
         method: 'post',
         path: '/verifyOtp',

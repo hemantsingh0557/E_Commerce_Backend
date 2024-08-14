@@ -10,6 +10,7 @@ import { generateSessionId } from "../utils/helperFunctions.js";
 
 export const checkoutService = { };
 
+
 checkoutService.validateAndLockItems = async (userId, items) => {
     try 
     {

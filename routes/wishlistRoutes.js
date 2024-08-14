@@ -6,6 +6,7 @@ import { wishlistController } from '../controller/wishlistController.js';
 
 
 
+
 export const wishlistRoutes = [
     {
         method : 'post' ,

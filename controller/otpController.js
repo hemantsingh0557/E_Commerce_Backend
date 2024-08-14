@@ -6,9 +6,7 @@ import { generateJWTAccessToken } from "../utils/helperFunctions.js";
 
 
 
-
 const otpController = {} ;
-
 
 
 

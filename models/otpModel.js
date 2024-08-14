@@ -18,4 +18,3 @@ export const otpModel = mongoose.model('otp', otpSchema);
 
    
 
-

@@ -3,6 +3,7 @@ import Joi from 'joi' ;
 import { userController } from '../controller/userController.js';
 
 
+
 export const userRoutes = [
     {
         method: 'post',

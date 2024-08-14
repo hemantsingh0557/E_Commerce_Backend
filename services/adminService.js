@@ -25,6 +25,7 @@ adminService.addProductToDb = async (productDetails) => {
 };
 
 
+
 adminService.updateBaseProductDetailsInDb = async (productId, updateData) => {
     try 
     {

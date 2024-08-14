@@ -4,7 +4,6 @@ import { addressController } from '../controller/addressController.js';
 
 
 
-
 export const addressRoutes = [
     {
         method: 'post',

@@ -17,5 +17,3 @@ export const allRoutes = [ ...addressRoutes , ...addToCardRoutes , ...adminRoute
     ...paymentRoutes , ...productRoutes , ...userRoutes , ...wishlistRoutes 
   ] ; 
 
-
-

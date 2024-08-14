@@ -25,7 +25,6 @@ const ProductVariationsModel = mongoose.model('ProductVariations', productVariat
 export { ProductVariationsModel };
 
 
-
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
@@ -75,7 +74,6 @@ export { ProductModel };
 // const ProductModel = mongoose.model('Product', productSchema);
 
 // export { ProductModel };
-
 
 
 

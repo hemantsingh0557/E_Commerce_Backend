@@ -34,7 +34,6 @@ addressController.getAddress = async (payload) =>{
 
 
 
-
 addressController.updateAddress = async (payload) =>{
     // let { addressId , userId , recepientName , mobileNumber , street , landMark , city , state , postalCode , country , addressType } = payload ;  
     let { userId , ...updateAddressDetails } = payload ;  

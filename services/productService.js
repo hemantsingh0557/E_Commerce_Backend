@@ -75,6 +75,8 @@ productService.searchProducts = async (filters) => {
 
 
 
+
+
 productService.ViewSpecificProduct = async (productId, userId) => {
     try {
         const productDetails = await ProductModel.aggregate([

@@ -9,7 +9,6 @@ export const wishlistController = {} ;
 
 
 
-
 wishlistController.addToWishlist = async(payload) =>{
     let {userId , productId } = payload ;
     const addProductToWishlist = await wishlistService.addProductToWishlistDb(userId , productId ) ;
@@ -21,7 +20,6 @@ wishlistController.addToWishlist = async(payload) =>{
     }
     return { statusCode : 201 , data : response }
 }
-
 
 
 

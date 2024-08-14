@@ -85,6 +85,7 @@ otpService.sendOtp = async(userId , email , mobileNumber ) => {
 }
 
 
+
 otpService.verifyOtp = async(userId , enteredOtp ) => {
     const response = { success: true, message: OTP_MESSAGE.VERIFEID_OTP };
     const otpInDb = await otpService.getUserOtp(userId) ;

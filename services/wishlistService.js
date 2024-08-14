@@ -42,6 +42,7 @@ wishlistService.removeProductFromWishlistDb = async (userId, productId) => {
 
 
 
+
 wishlistService.getAllProductFromWishlistDb = async (userId) => {
     try 
     {

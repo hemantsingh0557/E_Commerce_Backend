@@ -22,6 +22,7 @@ export const ORDER_STATUS = ['Preparing for Shipment', 'Dispatched', 'Out for De
 
 
 
+
 export const RESPONSE_MESSAGE = {} ; 
 RESPONSE_MESSAGE.USER_EXIST = "Email or mobile number already exists" ;
 RESPONSE_MESSAGE.SIGNED_UP = "New user signed up successfully. Now please verify your OTP" ;
