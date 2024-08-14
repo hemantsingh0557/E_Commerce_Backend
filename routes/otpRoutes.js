@@ -20,7 +20,7 @@ const otpRoutes = [
             .or('email', 'mobileNumber') 
             .required()
         } ,
-        controller : otpController.sentOtp 
+        controller : otpController.sendOtp 
     } ,   
     {
         method: 'post',
@@ -35,7 +35,7 @@ const otpRoutes = [
     }
 
 ]
-
+ 
 
 export {otpRoutes} ;
 

@@ -42,7 +42,7 @@ export const productRoutes = [
         controller: productController.viewProduct ,
     } ,
 ] ;
-
+ 
 
 
 

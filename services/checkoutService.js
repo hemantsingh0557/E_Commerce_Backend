@@ -9,10 +9,8 @@ export const checkoutService = {};
 // Validate and Lock Items
 checkoutService.validateAndLockItems = async (userId, items) => {
     const sessionId = generateSessionId();
-
     for (let item of items) {
         const productVariation = await ProductVariationsModel.findById(item.productVariationId);
-        if (!productVariation) return { message: CHECKOUT_MESSAGE.PRODUCT_VARIATION_NOT_FOUND };
         if (productVariation.stock < item.productQuantity) return { message: RESPONSE_MESSAGE.VARIATION_OUT_OF_STOCK };
 
         await LockedProductModel.findOneAndUpdate(
@@ -20,10 +18,9 @@ checkoutService.validateAndLockItems = async (userId, items) => {
             { sessionId, quantity: item.productQuantity, expiresAt: new Date(Date.now() + LOCK_TIMEOUT * 1000) },
             { upsert: true }
         );
-
         productVariation.stock -= item.productQuantity;
         await productVariation.save();
     }
-    
     return { sessionId };
 };
+ 

@@ -32,16 +32,16 @@ productController.searchProducts = async (payload) => {
 productController.viewProduct = async (payload) => {
     const { productId, userId } = payload;
 
-    const productDetails = await productService.viewSpecificProduct(productId, userId);
+    const productDetails = await productService.viewSpecificProduct(productId, userId); // / user id to check if this specific product already in whishlist or not
 
     if (!productDetails.length) {
-        return createErrorResponse(RESPONSE_MESSAGE.NO_PRODUCT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+        return createErrorResponse(RESPONSE_MESSAGE.NO_PRODUCTS_FOUND , ERROR_TYPES.DATA_NOT_FOUND);
     }
 
     const response = {
-        message: RESPONSE_MESSAGE.PRODUCT_FETCHED_SUCCESSFULLY, 
+        message: RESPONSE_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY, 
         productDetails: productDetails[0] 
     };
 
-    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_FETCHED_SUCCESSFULLY, response);
+    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY, response);
 };

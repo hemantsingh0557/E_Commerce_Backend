@@ -1,7 +1,6 @@
 import { LockedProductModel } from "../models/LockedProductModel.js";
 import { OrderItemModel, OrderModel } from "../models/OrderModel.js";
 import { PaymentModel } from "../models/PaymentModel.js";
-import { calculateTotalAmount } from "../utils/helperFunctions.js";
 import { paymentService } from "./paymentService.js";
 
 export const orderService = {};
@@ -88,6 +87,15 @@ orderService.getOrderSummary = async (userId, sessionId, addressId, paymentDetai
     };
 };
 
+
+
+
+function calculateTotalAmount(lockedProducts) {
+    return lockedProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
+}
+
+
+
 orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethodId) => {
     const payment = await PaymentModel.findById(paymentMethodId);
     if (payment.paymentMethod !== 'COD') {
@@ -126,6 +134,5 @@ orderService.getAllOrdersDetailsFromDb = async (userId, page, limit) => {
         .skip((page - 1) * limit)
         .limit(parseInt(limit))
         .populate('orderItems'); // Assuming orderItems is populated
-
     return getAllOrders;
 };

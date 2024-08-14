@@ -7,7 +7,7 @@ export const fileRoutes = [
     {
         method: 'post',
         path: '/uploadFile',
-        files : true ,
+        uploadFiles : true ,
         controller: fileController.uploadFile ,
     }
 ];

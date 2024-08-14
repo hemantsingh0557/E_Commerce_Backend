@@ -18,7 +18,7 @@ export const addressRoutes = [
                 state: Joi.string().required(),
                 postalCode: Joi.string().pattern(/^[A-Z][0-9]{10}$/).required(), 
                 country: Joi.string().required(),
-                addressType: Joi.string().valid('home', 'work', 'other').default('home').required(),
+                addressType: Joi.string().default('home').required(),
             })
         },
         auth: true,
@@ -26,7 +26,7 @@ export const addressRoutes = [
     } ,
     {
         method: 'get',
-        path: '/getAddress', 
+        path: '/getAddress/:addressId', 
         schema: {
             params: Joi.object({
                 addressId: Joi.string().length(24).hex().required(), 
@@ -51,7 +51,7 @@ export const addressRoutes = [
                 state: Joi.string().optional(),
                 postalCode: Joi.string().pattern(/^[A-Z][0-9]{10}$/).optional(), 
                 country: Joi.string().optional(),
-                addressType: Joi.string().valid('home', 'work', 'other').default('home').optional(),
+                addressType: Joi.string().default('home').optional(),
             })
         },
         auth: true,
@@ -70,12 +70,7 @@ export const addressRoutes = [
     } ,
     {
         method: 'get',
-        path: '/getAllUserAddresses/:userId', 
-        schema: {
-            params: Joi.object({
-                userId: Joi.string().length(24).hex().required(), 
-            })
-        },
+        path: '/getAllUserAddresses', 
         auth: true,
         controller: addressController.getAllUserAddresses,
     } ,

@@ -4,7 +4,7 @@ export const wishlistService = {};
 
 wishlistService.addProductToWishlistDb = async (userId, productId) => {
     const wishlistObject = new WishListModel({ userId, productId });
-    await wishlistObject.save();
+    return await wishlistObject.save();
 };
 
 wishlistService.removeProductFromWishlistDb = async (userId, productId) => {

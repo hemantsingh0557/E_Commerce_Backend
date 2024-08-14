@@ -25,10 +25,6 @@ export function generateOrderNumber()
 
 
 
-export function calculateTotalAmount(lockedProducts) {
-    return lockedProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
-}
-
 
 
 export const generateJWTAccessToken = (jwtPayloadObject)  => {
@@ -37,9 +33,9 @@ export const generateJWTAccessToken = (jwtPayloadObject)  => {
 
 
 export const validateRequest = (schema) => {
-    return (req , res , next ) => {
+    return (req, res, next) => {
         if (schema.params) {
-            const { error } = schema.params.validate(req.params, { abortEarly: false });
+            const { error } = schema.params.validate(req.params);
             if (error) {
                 return res.status(400).json({
                     error: error.details.map(err => err.message),
@@ -47,7 +43,23 @@ export const validateRequest = (schema) => {
             }
         }
         if (schema.body) {
-            const { error } = schema.body.validate(req.body, { abortEarly: false });
+            const { error } = schema.body.validate(req.body );
+            if (error) {
+                return res.status(400).json({
+                    error: error.details.map(err => err.message),
+                });
+            }
+        }
+        if (schema.query) {
+            const { error } = schema.query.validate(req.query);
+            if (error) {
+                return res.status(400).json({
+                    error: error.details.map(err => err.message),
+                });
+            }
+        }
+        if (schema.headers) {
+            const { error } = schema.headers.validate(req.headers, { abortEarly: false });
             if (error) {
                 return res.status(400).json({
                     error: error.details.map(err => err.message),
@@ -55,9 +67,8 @@ export const validateRequest = (schema) => {
             }
         }
         next();
-    }
-}
-
+    };
+};
 
 
 

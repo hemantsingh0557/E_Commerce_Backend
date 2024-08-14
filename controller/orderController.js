@@ -10,23 +10,19 @@ export const orderController = {};
 orderController.showOrderSummary = async (payload) => {
     const { userId, sessionId, addressId, paymentDetailsId } = payload;
     const orderSummary = await orderService.getOrderSummary(userId, sessionId, addressId, paymentDetailsId);
-
     if (!orderSummary) {
         return createErrorResponse(RESPONSE_MESSAGE.FAILED_TO_GET_ORDER_SUMMARY, ERROR_TYPES.DATA_NOT_FOUND);
     }
-
-    return createSuccessResponse(RESPONSE_MESSAGE.ORDER_SUMMARY_FETCHED_SUCCESSFULLY, { orderSummary });
+    return createSuccessResponse(RESPONSE_MESSAGE.ORDER_SUMMARY_CREATED_SUCCESSFULLY, { orderSummary });
 };
 
 // Place Order
 orderController.placeOrder = async (payload) => {
     const { userId, sessionId, addressId, paymentMethodId } = payload;
     const orderConfirmation = await orderService.placeOrderInDb(userId, sessionId, addressId, paymentMethodId);
-
     if (!orderConfirmation) {
         return createErrorResponse(RESPONSE_MESSAGE.FAILED_TO_PLACE_ORDER, ERROR_TYPES.INTERNAL_SERVER_ERROR);
     }
-
     return createSuccessResponse(RESPONSE_MESSAGE.ORDER_PLACED_SUCCESSFULLY, { orderConfirmation });
 };
 
@@ -34,10 +30,8 @@ orderController.placeOrder = async (payload) => {
 orderController.getAllOrders = async (payload) => {
     const { userId, page = 1, limit = 10 } = payload;
     const orders = await orderService.getAllOrdersDetailsFromDb(userId, page, limit);
-
     if (!orders.length) {
-        return createErrorResponse(RESPONSE_MESSAGE.NO_ORDERS_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+        return createErrorResponse(RESPONSE_MESSAGE.ORDER_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-
-    return createSuccessResponse(RESPONSE_MESSAGE.ORDERS_FETCHED_SUCCESSFULLY, { orders });
+    return createSuccessResponse(RESPONSE_MESSAGE.ORDER_FETCHED_SUCCESSFULLY, { orders });
 };

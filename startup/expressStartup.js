@@ -53,12 +53,12 @@ async function expressStartup(app) {
         res.send('Hello, World! This is an e-commerce website');
     });
     allRoutes.forEach(route => {
-        const { method, path, schema = {}, auth = false, roles = [], controller, files } = route;
+        const { method, path, schema = {}, auth = false, roles = [], controller, uploadFiles } = route;
         const middlewares = [];
         if (schema) middlewares.push(validateRequest(schema));
         if (auth) middlewares.push(authenticateToken);
         if (roles.length) middlewares.push(authorizeRole(...roles));
-        if (files) middlewares.push(upload); 
+        if (uploadFiles) middlewares.push(upload); 
         app[method](path, ...middlewares, handleRequest(controller));
     });
 }

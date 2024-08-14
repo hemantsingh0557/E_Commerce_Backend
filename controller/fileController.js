@@ -1,4 +1,4 @@
-import { fileService } from "../services/fileService.js";
+// import { fileService } from "../services/fileService.js";
 import { createErrorResponse, createSuccessResponse } from "../utils/commonFunctions/responseUtils.js";
 import { RESPONSE_MESSAGE } from "../utils/messages.js";
 import { ERROR_TYPES } from "../utils/constants.js";
@@ -7,11 +7,14 @@ export const fileController = {};
 
 fileController.uploadFile = async (payload) => {
     const { files } = payload;
-    const result = await fileService.saveFile(files);
-
-    if (result.message === RESPONSE_MESSAGE.NO_FILES_PROVIDED || result.message === RESPONSE_MESSAGE.FAILED_TO_UPLOAD_FILE) {
-        return createErrorResponse(result.message, ERROR_TYPES.BAD_REQUEST);
+    if (!files || files.length === 0) {
+        return createErrorResponse(RESPONSE_MESSAGE.NO_FILES_PROVIDED, ERROR_TYPES.BAD_REQUEST , null );
     }
-
-    return createSuccessResponse(result.message, { filePaths: result.data });
+    const filePaths = files.map(file => file.path);
+    
+    // Check if any file path is null
+    if (filePaths.some(path => path === null)) {
+        return createErrorResponse(RESPONSE_MESSAGE.FAILED_TO_UPLOAD_FILE, ERROR_TYPES.BAD_REQUEST , null );
+    }
+    return createSuccessResponse(RESPONSE_MESSAGE.FILE_UPLOADED_SUCCESSFULLY, { filePaths });
 };

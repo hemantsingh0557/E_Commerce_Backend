@@ -12,8 +12,8 @@ addToCartController.addProductToCart = async (payload) => {
     
     if (errorItems.length > 0) {
         return createErrorResponse(
-            RESPONSE_MESSAGE.CART_UPDATE_PARTIALLY_SUCCESSFUL,
-            ERROR_TYPES.PARTIAL_SUCCESS
+            RESPONSE_MESSAGE.CART_UPDATED_PARTIALLY ,
+            ERROR_TYPES.BAD_REQUEST
         );
     }
 

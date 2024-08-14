@@ -13,16 +13,16 @@ adminController.getProductDetail = async (payload) => {
     if (!productDetail) {
         return createErrorResponse(RESPONSE_MESSAGE.PRODUCT_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_FETCHED_SUCCESSFULLY, { product: productDetail });
+    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY , { product: productDetail });
 };
 
 // Add Product
 adminController.addProduct = async (payload) => {
-    const { variations, ...productDetails } = payload;
+    const { productDetails } = payload;
 
-    const newProduct = await adminService.addProductToDb({ ...productDetails, variations });
+    const newProduct = await adminService.addProductToDb({ productDetails });
     if (!newProduct) {
-        return createErrorResponse(RESPONSE_MESSAGE.PRODUCT_ADD_FAILED, ERROR_TYPES.BAD_REQUEST);
+        return createErrorResponse(RESPONSE_MESSAGE.FAILED_TO_ADD_PRODUCT, ERROR_TYPES.BAD_REQUEST);
     }
     return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_ADDED_SUCCESSFULLY, { product: newProduct });
 };

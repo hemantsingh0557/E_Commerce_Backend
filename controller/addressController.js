@@ -24,8 +24,8 @@ addressController.getAddress = async (payload) => {
 
 // Update Address
 addressController.updateAddress = async (payload) => {
-    const { addressId, ...updateAddressDetails } = payload;
-    const updatedAddress = await addressService.updateAddressToDb({ addressId, ...updateAddressDetails });
+    const { userId , addressId, ...updateAddressDetails } = payload;
+    const updatedAddress = await addressService.updateAddressToDb({ userId , addressId, ...updateAddressDetails });
     if (!updatedAddress) {
         return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
@@ -34,7 +34,7 @@ addressController.updateAddress = async (payload) => {
 
 // Remove Address
 addressController.removeAddress = async (payload) => {
-    const { addressId } = payload;
+    const { userId , addressId } = payload;
     const removedAddress = await addressService.removeAddressFromDb(addressId);
     if (!removedAddress) {
         return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);

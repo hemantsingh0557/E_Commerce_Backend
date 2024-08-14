@@ -2,6 +2,9 @@ import { userModel } from "../models/userModel.js";
 
 const userService = {};
 
+userService.findUserByIdInDB = async (userId) => {
+    return await userModel.findOne({userId});
+};
 userService.findUserInDB = async (email, mobileNumber) => {
     return await userModel.findOne({ $or: [{ email: email }, { mobileNumber: mobileNumber }] });
 };

@@ -10,7 +10,7 @@ import { wishlistController } from '../controller/wishlistController.js';
 export const wishlistRoutes = [
     {
         method : 'post' ,
-        path : '/addToWishlist' ,
+        path : '/addToWishlist/:productId' ,
         schema  :{
             body : Joi.object({
                 productId: Joi.string().length(24).hex().required()
@@ -21,7 +21,7 @@ export const wishlistRoutes = [
     } ,
     {
         method : 'delete' ,
-        path : '/removeFromWishlist' ,
+        path : '/removeFromWishlist/:productId' ,
         schema  :{
             body : Joi.object({
                 productId: Joi.string().length(24).hex().required()

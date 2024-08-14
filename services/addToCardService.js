@@ -9,14 +9,16 @@ addToCartService.addProductToCartDb = async (userId, cartItems) => {
     let successItems = [];
     let errorItems = [];
 
-    for (let item of cartItems) {
-        try {
+    for (let item of cartItems) 
+    {
+        try 
+        {
             const productVariation = await ProductVariationsModel.findOne({ _id: item.productVariationId, productId: item.productId });
             if (item.productQuantity > productVariation.stock) {
                 item.productQuantity = productVariation.stock;
                 errorItems.push({
                     productId: item.productId,
-                    message: `${RESPONSE_MESSAGE.ADD_TO_CART_MESSAGE.REQUESTED_QUANTITY_EXCEEDS_STOCK}${productVariation.stock}`
+                    message: `${RESPONSE_MESSAGE.INSUFFICIENT_STOCK}${productVariation.stock}`
                 });
             }
             const existingItem = await AddToCartModel.findOneAndUpdate(
@@ -25,7 +27,9 @@ addToCartService.addProductToCartDb = async (userId, cartItems) => {
                 { new: true, upsert: true }
             );
             successItems.push({ productId: item.productId, quantity: existingItem.quantity });
-        } catch (error) {
+        } 
+        catch (error) 
+        {
             errorItems.push({ productId: item.productId, error: error.message });
         }
     }

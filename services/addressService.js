@@ -16,8 +16,8 @@ addressService.getAddressToDb = async (userId, addressId) => {
 
 // Update Address in Database
 addressService.updateAddressToDb = async (updateAddressDetails) => {
-    const { addressId, ...updateData } = updateAddressDetails;
-    return await AddressModel.findByIdAndUpdate(addressId, updateData, { new: true });
+    const { userId , addressId, ...updateData } = updateAddressDetails;
+    return await AddressModel.updateOne({_id:addressId, userId : userId } ,{ updateData }, { new: true });
 };
 
 // Remove Address from Database

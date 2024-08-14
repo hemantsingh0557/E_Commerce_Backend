@@ -10,17 +10,19 @@ export const RESPONSE_MESSAGE = {
     PASSWORD_MISMATCH : "Unauthorized access" ,
     VARIFY_OTP : "Please verify your OTP" ,
     SIGNED_IN : "User signed in successfully" ,
+    PASSWORD_RESET_FAILED : 'Failed to reset password .' ,
     PASSWORD_RESET : 'Password has been reset successfully.' ,
    
    
     // // otp realted messages
     FAILED_SAVE_OTP : "Otp can't be saved in DB" ,
-    OTP_SENT : "Otp sent successfully" ,
-    FAILED_EMAIL_OTP : "Failed to send OTP via email" ,
+    OTP_SENT_SUCCESSFULLY : "Otp sent successfully" ,
+    FAILED_TO_SEND_OTP : "Failed to send OTP via email" ,
     FAILED_MOBILE_NUMBER_OTP : "Failed to send OTP via mobile number" ,
     EXPIRED_OTP : "OTP is expired or not found. Please try to resend the OTP" ,
     INVALID_OTP : "Invalid OTP. Please enter the correct OTP" ,
-    VERIFEID_OTP : "OTP is verified successfully" ,
+    OTP_VERIFIED_SUCCESSFULLY : "OTP is verified successfully" ,
+    VERIFY_OTP : "Please varify your otp" ,
    
    
     // // ADD_TO_CART  realted messages
@@ -69,6 +71,7 @@ export const RESPONSE_MESSAGE = {
     ALREADY_EXIST : "Address already exists." ,
     ADDED_SUCCESSFULLY : "Address added successfully." ,
     NOT_EXIST : "Address not found." ,
+    ADDRESS_FETCHED_SUCCESSFULLY : "Address fetched successfully." ,
     ADDRESS_UPDATED_SUCCESSFULLY : "Address updated successfully." ,
     ADDRESS_DELETED_SUCCESSFULLY : "Address deleted successfully." ,
     NO_ADDRESS_FOUND : "No address found for this user." ,
@@ -77,11 +80,13 @@ export const RESPONSE_MESSAGE = {
     
     
     // // Order realted messages
+    FAILED_TO_GET_ORDER_SUMMARY : 'can not get the order summary ' ,
     FAILED_TO_GET_PRODUCT_DETAIL : 'can not find product details ' ,
     SUCCESSFULLY_FETCHED_PRODUCT_DETAIL : 'Fetched product details successfully ' ,
     ORDER_PLACED_SUCCESSFULLY : 'Order Placed Successfully' ,
     ORDER_NOT_FOUND : "No Order found for this user." ,
     ORDER_FETCHED_SUCCESSFULLY : "Order fetched successfully ." ,
+    ORDER_SUMMARY_CREATED_SUCCESSFULLY : "Order summary created successfully ." ,
     
     
     // // Payment realted messages
@@ -105,9 +110,10 @@ export const RESPONSE_MESSAGE = {
     PRODUCT_VARIATION_UPDATED_SUCCESSFULLY : "Product variation updated successfully." ,
     FAILED_TO_ADD_PRODUCT_VARIATION : "Failed to add the product variation." ,
     PRODUCT_VARIATION_ADDED_SUCCESSFULLY : "Product variation added successfully." ,
+    NOT_AUTHORISED : "Forbidden: You do not have the required permissions."  ,
     
     
-    // // otp realted messages
+    // // files realted messages
     FILE_UPLOADED_SUCCESSFULLY : "Files uploaded successfully" ,
     FAILED_TO_UPLOAD_FILE : "Failed to upload some files" ,
     NO_FILES_PROVIDED : "No files provided" ,

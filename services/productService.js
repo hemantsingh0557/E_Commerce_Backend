@@ -9,7 +9,6 @@ productService.searchProducts = async (filters) => {
         sortField = 'name', sortOrder = 'asc', brandsName, size, color, material, discount = 0,
         page = 1, limit = 10, inStock = true
     } = filters;
-
     const pipeline = [
         {
             $lookup: {
@@ -22,7 +21,6 @@ productService.searchProducts = async (filters) => {
         { $unwind: { path: '$variations', preserveNullAndEmptyArrays: true } }
         // Add more lookup stages for rating and wishlist here
     ];
-
     const matchStage = {};
     if (searchText) matchStage.$text = { $search: searchText };
     if (category) matchStage.category = category;
@@ -33,9 +31,7 @@ productService.searchProducts = async (filters) => {
     matchStage['variations.price'] = { $gte: minPrice, $lte: maxPrice };
     matchStage['variations.discount'] = { $gte: discount };
     matchStage['variations.inStock'] = inStock;
-
     if (Object.keys(matchStage).length > 0) pipeline.push({ $match: matchStage });
-
     const sortStage = {};
     if (sortField) sortStage[sortField] = sortOrder === 'asc' ? 1 : -1;
     pipeline.push({ $sort: sortStage });
@@ -47,10 +43,8 @@ productService.searchProducts = async (filters) => {
         ...pipeline.slice(0, -2), // Exclude $skip and $limit
         { $count: 'total' }
     ];
-
     const totalProducts = await ProductModel.aggregate(countPipeline);
     const totalCount = totalProducts.length > 0 ? totalProducts[0].total : 0;
-
     return {
         productsResult,
         totalCount
@@ -96,6 +90,5 @@ productService.viewSpecificProduct = async (productId, userId) => {
             }
         }
     ]);
-
     return productDetails;
 };

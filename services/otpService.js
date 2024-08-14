@@ -1,13 +1,17 @@
 import { otpModel } from "../models/otpModel.js";
+import { userModel } from "../models/userModel.js";
 import { generateOtp, sendEmail } from "../utils/helperFunctions.js";
 import { userService } from "./userService.js";
 
 const otpService = {};
 
+
+
 otpService.saveOtpForUser = async (otpObject) => {
     const userOtpObj = new otpModel(otpObject);
     await userOtpObj.save();
 };
+
 
 otpService.getUserOtp = async (userId) => {
     return await otpModel.findOne({ userId });
@@ -28,16 +32,15 @@ otpService.sendOtp = async (userId, email) => {
             message: `<p>Your OTP is: <strong>${otp}</strong></p>`,
         });
     }
+    return { success: true };
 };
 
 otpService.verifyOtp = async (userId, enteredOtp) => {
     const otpInDb = await otpService.getUserOtp(userId);
     if (!otpInDb) return { success: false }; // Consider adding a message in the response if needed
     if (otpInDb.userOtp !== enteredOtp) return { success: false };
-
     await userService.verifyUser(userId);
     await otpService.clearUserOtpObject(otpInDb._id);
-
     return { success: true };
 };
 

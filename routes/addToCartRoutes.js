@@ -30,7 +30,7 @@ export const addToCardRoutes = [
         auth: true,
         controller: addToCartController.removeProductFromCart,
     }
-]
+] 
 
 
 
