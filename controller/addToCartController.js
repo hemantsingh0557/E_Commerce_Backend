@@ -3,26 +3,35 @@ import { addToCartService } from "../services/addToCardService.js";
 
 
 
-const addToCartController = {};
+export const addToCartController = {};
+
 
 addToCartController.addProductToCart = async (payload) => {
-    const { userId, cart } = payload ;
-    const addProductToCart = await addToCartService.addProductToCartDb(userId, cart);
+    const { userId, cartItems } = payload ;
+    const addProductToUserCart = await addToCartService.addProductToCartDb(userId, cartItems);
 
-    if (!addProductToCart.success) return res.status(400).json({ statusCode: 400, data: { message: addProductToCart.message } });
+    if (!addProductToUserCart.success) return res.status(400).json({ statusCode: 400, data: { message: addProductToUserCart.message } });
     const response = {
-        message: addProductToCart.message,
+        message: addProductToUserCart.message,
         userId: userId,
-        successItems: addProductToCart.successItems,
-        errorItems: addProductToCart.errorItems
+        successItems: addProductToUserCart.successItems,
+        errorItems: addProductToUserCart.errorItems
     } ;
-    return res.status(200).json({
-        statusCode: 200 ,
-        data: response
-    });
+    return { statusCode: 200 , data: response };
 };
 
-export { addToCartController };
+
+
+addToCartController.removeProductFromCart = async (payload) => {
+    const { userId, productId , productVariationId } = payload ;
+    const removeProductFromUserCart = await addToCartService.removeProductFromCartInDb(userId, productId , productVariationId);
+    if (!removeProductFromUserCart.success) return res.status(400).json({ statusCode: 400, data: { message: removeProductFromUserCart.message } });
+    const response = { message: removeProductFromUserCart.message, userId: userId, } ;
+    return { statusCode: 200 , data: response };
+};
+
+
+
 
 
 

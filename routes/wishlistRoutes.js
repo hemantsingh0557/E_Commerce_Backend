@@ -19,12 +19,6 @@ export const wishlistRoutes = [
         controller : wishlistController.addToWishlist 
     } ,
     {
-        method : 'get' ,
-        path : '/getWishlist' ,
-        auth : true ,
-        controller : wishlistController.getWishlist 
-    } ,
-    {
         method : 'delete' ,
         path : '/removeFromWishlist' ,
         schema  :{
@@ -34,6 +28,12 @@ export const wishlistRoutes = [
         } ,
         auth : true ,
         controller : wishlistController.removeFromWishlist 
+    } ,
+    {
+        method : 'get' ,
+        path : '/getWishlist' ,
+        auth : true ,
+        controller : wishlistController.getWishlist 
     } ,
 ]
 

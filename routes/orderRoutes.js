@@ -11,8 +11,8 @@ export const orderRoutes = [
         schema : {
             body : Joi.object({
                 sessionId : Joi.string().length(24).hex().required() ,
-                // addressId : Joi.string().length(24).hex().required() ,
-                // paymentDetailsId : Joi.string().length(24).hex().required() ,
+                addressId : Joi.string().length(24).hex().required() ,
+                paymentDetailsId : Joi.string().length(24).hex().required() ,
             })
         } ,
         auth : true ,

@@ -8,40 +8,32 @@ export const productController = {} ;
 
 
 productController.searchProducts = async (payload) => {
-    const { searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder, brandsName, size, color, material, discount, page, limit, inStock } = payload ;
+    const { searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder, brandsName, size, color, material, discount, page, limit, inStock } = payload;
     const results = await productService.searchProducts({ searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, 
-        sortOrder, brandsName, size, color, material, discount, page, limit, inStock  }); 
+        sortOrder, brandsName, size, color, material, discount, page, limit, inStock });
 
-
-    if (results.total === 0) return { statusCode: 404, data : { message : PRODUCTS_MESSAGE.NO_PRODUCTS_FOUND }  }  ;
+    if (!results.success) return { statusCode: 404, data: { message: results.message } };
     const response = {
-        message: PRODUCTS_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY,
-        ...results,
+        message: results.message,
+        ...results.data,
     };
-    return {
-        statusCode: 200,
-        data: response
-    };
+    return { statusCode: 200, data: response };
 };
 
 
 
 
-
-productController.viewProduct = async (payload) => {
-    const { productId } = payload ;
-    const productDetails = await productService.ViewSpecificProduct(productId) ;
+productController.viewProduct = async (payload) => 
+{
+    const { productId, userId } = payload;  
+    const productDetails = await productService.ViewSpecificProduct(productId, userId);
+    if (!productDetails.success) return { statusCode: 400, data: { message: productDetails.message } };
     const response = {
-        message : PRODUCTS_MESSAGE.PRODUCT_FETCHED ,
-        productDetails ,
-    }
-    return {
-        statusCode : 200 ,
-        data : response 
-    }
+        message: productDetails.message,
+        productDetails: productDetails.data
+    };
+    return { statusCode: 200, data: response };
 };
-
-
 
 
 

@@ -9,8 +9,7 @@ export const checkoutController = { }  ;
 
 
 
-
-checkoutController.initiateCheckout = async(payload) => {
+checkoutController.initiateCheckout = async (payload) => {
     const { userId, items } = payload;
     const validationResponse = await checkoutService.validateAndLockItems(userId, items);
     if (!validationResponse.success) return { statusCode: 400, data: { message: validationResponse.message } };
@@ -20,7 +19,6 @@ checkoutController.initiateCheckout = async(payload) => {
     };
     return { statusCode: 200, data: response };
 }
-
 
 
 

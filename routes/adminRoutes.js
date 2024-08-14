@@ -35,7 +35,7 @@ export const adminRoutes = [
                     weight: Joi.object({ value: Joi.number().required(), unit: Joi.string().valid('mg', 'g', 'kg').default('g') }).optional(),
                     capacity: Joi.object({ value: Joi.number().required(), unit: Joi.string().valid('ml', 'l').default('ml') }).optional(),
                     color: Joi.string().optional(),
-                    material: Joi.string().optional(),
+                    // material: Joi.string().optional(),
                     dimensions: Joi.object({
                         length: Joi.object({ value: Joi.number().required(), unit: Joi.string().valid('cm', 'm').default('cm') }).optional(),
                         width: Joi.object({ value: Joi.number().required(), unit: Joi.string().valid('cm', 'm').default('cm') }).optional(),
@@ -86,7 +86,7 @@ export const adminRoutes = [
                 weight: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('mg', 'g', 'kg').optional()  }).optional(),
                 capacity: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('ml', 'l').optional()  }).optional(),
                 color: Joi.string().optional(),
-                material: Joi.string().optional(),
+                // material: Joi.string().optional(),
                 dimensions: Joi.object({
                     length: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
                     width: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
@@ -115,7 +115,7 @@ export const adminRoutes = [
                 weight: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('mg', 'g', 'kg').optional()  }).optional(),
                 capacity: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('ml', 'l').optional()  }).optional(),
                 color: Joi.string().optional(),
-                material: Joi.string().optional(),
+                // material: Joi.string().optional(),
                 dimensions: Joi.object({
                     length: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
                     width: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),

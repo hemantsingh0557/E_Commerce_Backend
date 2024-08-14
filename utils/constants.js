@@ -58,22 +58,23 @@ ADD_TO_CART_MESSAGE.FAILED_TO_UPDATE_CART = "Failed to update cart" ;
 ADD_TO_CART_MESSAGE.ITEMS_SUCCESSFULLY_UPDATED = "items were successfully updated." ;
 ADD_TO_CART_MESSAGE.ITEMS_STOCK_ISSUES = "items had stock issues." ;
 
+ADD_TO_CART_MESSAGE.ITEM_NOT_FOUND = "item not found in the cart " ;
+ADD_TO_CART_MESSAGE.ITEM_REMOVED_SUCCESSFULLY = "item removed from the cart successfully " ;
+
 
 
 
 
 export const WISHLIST_MESSAGE = {} ;
-WISHLIST_MESSAGE.ADD_SUCCESSFULLY = "Product added to wishlist successfully" ;
-WISHLIST_MESSAGE.FAILED_TO_ADD = "Failed to add to wishlist" ;
-WISHLIST_MESSAGE.NO_PRODUCT_IN_WISHLIST = "there is no product in the wishlist " ;
-WISHLIST_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY = "successfully fetched all the products from wishlist " ;
-WISHLIST_MESSAGE.FAILED_TO_FETCHED_PRODUCTS = "Some internal error during fetching the product from wishlist " ;
-WISHLIST_MESSAGE.PRODUCT_NOT_FOUND = " product is not found " ;
-WISHLIST_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY = "Product is deleted from teh wishlist successfully " ;
-WISHLIST_MESSAGE.FAILED_TO_DELETED_PRODUCTS = "Some internal error during deleting the product from wishlist " ;
-
-
-
+WISHLIST_MESSAGE.ADD_SUCCESSFULLY = 'Product added to wishlist successfully.' ;
+WISHLIST_MESSAGE.FAILED_TO_ADD = 'Failed to add product to wishlist.' ;
+WISHLIST_MESSAGE.NO_PRODUCT_IN_WISHLIST = 'No products found in wishlist.' ;
+WISHLIST_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY = 'Products fetched successfully.' ;
+WISHLIST_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY = 'Product removed from wishlist successfully.' ;
+WISHLIST_MESSAGE.FAILED_TO_FETCHED_PRODUCTS = 'Failed to fetch products.' ;
+WISHLIST_MESSAGE.FAILED_TO_DELETED_PRODUCTS = 'Failed to remove product from wishlist.' ;
+WISHLIST_MESSAGE.PRODUCT_NOT_FOUND = 'Product not found in wishlist.' ;
+WISHLIST_MESSAGE.PRODUCT_ALREADY_IN_WISHLIST = 'Product already in wishlist.' ;
 
 
 
@@ -90,8 +91,6 @@ PRODUCTS_MESSAGE.PRODUCT_FETCHED = "Product details fetched successfully " ;
 
 
 
-
-
 export const CHECKOUT_MESSAGE = {} ; 
 CHECKOUT_MESSAGE.INITIATED_SUCCESSFULLY = "Checkout process initiated successfully." ;
 CHECKOUT_MESSAGE.PRODUCT_STOCK_ISSUE = "Insufficient stock for product." ;
@@ -100,6 +99,10 @@ CHECKOUT_MESSAGE.ORDER_PLACED_SUCCESSFULLY = "Your order has been placed success
 CHECKOUT_MESSAGE.FAILED_TO_PLACE_ORDER = "There was an error placing your order." ;
 CHECKOUT_MESSAGE.PRODUCT_RELEASED_SUCCESSFULLY = "Product stock has been released successfully." ;
 CHECKOUT_MESSAGE.FAILED_TO_RESTORE_PRODUCT = "Failed to restore the product." ;
+
+CHECKOUT_MESSAGE.PRODUCT_VARIATION_NOT_FOUND = "Product variation not found " ;
+CHECKOUT_MESSAGE.VARIATION_OUT_OF_STOCK = "Product variation is out of stock " ;
+
 
 
 

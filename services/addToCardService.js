@@ -1,70 +1,68 @@
 
 import { AddToCartModel } from "../models/addToCartModel.js";
-import { ProductModel } from "../models/ProductModel.js";
-import { ADD_TO_CART_MESSAGE } from "../utils/constants.js";
+import { ProductModel, ProductVariationsModel } from "../models/ProductModel.js";
+import { ADD_TO_CART_MESSAGE, PRODUCTS_MESSAGE } from "../utils/constants.js";
 
 
 
 export const addToCartService = {};
 
-addToCartService.addProductToCartDb = async (userId, cart) => {
+addToCartService.addProductToCartDb = async (userId, cartItems) => {
     let successItems = [];
     let errorItems = [];
 
-    for (let item of cart) 
+    for (let item of cartItems) 
     {
-        try {
-            const product = await ProductModel.findById(item.productId);
-            if (item.productQuantity > product.stockQuantity) {
-                item.productQuantity = product.stockQuantity;
-                errorItems.push({ productId: item.productId, message: `Requested quantity exceeds stock. Added maximum available: ${product.stockQuantity}` });
+        try 
+        {
+            const productVariation = await ProductVariationsModel.findOne({_id: item.productVariationId,productId: item.productId});
+            if (item.productQuantity > productVariation.stock) 
+            {
+                item.productQuantity = productVariation.stock; 
+                errorItems.push({ productId: item.productId, message: `${ADD_TO_CART_MESSAGE.REQUESTED_QUANTITY_EXCEEDS_STOCK}${productVariation.stock}` });
             }
-            const existingItem = await AddToCartModel.findOne({
-                userId,
-                productId: item.productId,
-                size: item.size,
-                color: item.color
-            });
-            if (existingItem) 
-            {
-                existingItem.productQuantity += item.productQuantity ;
-                await existingItem.save();
-            } 
-            else 
-            {
-                const newItem = new AddToCartModel({
+            const existingItem = await AddToCartModel.findOneAndUpdate(
+                {
                     userId,
                     productId: item.productId,
-                    productQuantity: item.productQuantity ,
-                    size: item.size,
-                    color: item.color
-                });
-                await newItem.save();
-            }
-            successItems.push({ productId: item.productId, quantity: quantityToAdd });
+                    productVariationId: item.productVariationId,
+                },
+                { quantity: item.productQuantity },
+                { new: true, upsert: true } 
+            );
+            successItems.push({ productId: item.productId, quantity: existingItem.quantity });
         } 
         catch (error) 
         {
-            errorItems.push({ productId: item.productId, error: ADD_TO_CART_MESSAGE.INTERNAL_ERROR });
+            errorItems.push({ productId: item.productId, error: error.message });
         }
     }
-
-    let message = successItems.length ? (successItems.length === cart.length)
-        ? ADD_TO_CART_MESSAGE.CART_UPDATED_SUCCESSFULLY
-        : ADD_TO_CART_MESSAGE.CART_UPDATED_PARTIALLY
-        : ADD_TO_CART_MESSAGE.FAILED_TO_UPDATE_CART;
-
-    if (successItems.length) message += ` ${successItems.length} ${ADD_TO_CART_MESSAGE.ITEMS_SUCCESSFULLY_UPDATED}`;
-    if (errorItems.length) message += ` ${errorItems.length} ${ADD_TO_CART_MESSAGE.ITEMS_STOCK_ISSUES}`;
-
+    let message = '';
+    if (successItems.length > 0 && successItems.length == cartItems.length ) message = ADD_TO_CART_MESSAGE.CART_UPDATED_SUCCESSFULLY ;
+    else if (successItems.length > 0 && successItems.length != cartItems.length ) message = ADD_TO_CART_MESSAGE.CART_UPDATED_PARTIALLY  ;
+    else message = ADD_TO_CART_MESSAGE.FAILED_TO_UPDATE_CART;
     return {
         message,
         successItems,
         errorItems,
-        success: successItems.length > 0 
+        success: successItems.length > 0
     };
 };
 
+
+
+
+
+
+
+
+
+
+addToCartService.removeProductFromCartInDb = async (userId, productId , productVariationId) => {
+    const removeProdcut = await AddToCartModel.findOneAndDelete( { userId , productId , productVariationId  } ) ; 
+    if( !removeProdcut ) return { success : false , message : ADD_TO_CART_MESSAGE.ITEM_NOT_FOUND  } ; 
+    return { success : true , message : ADD_TO_CART_MESSAGE.ITEM_REMOVED_SUCCESSFULLY  } ; 
+};
 
 
 

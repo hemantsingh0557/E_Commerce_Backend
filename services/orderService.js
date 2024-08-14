@@ -12,23 +12,109 @@ import { paymentService } from "./paymentService.js";
 export const orderService = {} ; 
 
 
-orderService.getOrderSummary = async( userId , sessionId ) => {
-    try
+orderService.getOrderSummary = async (userId, sessionId, addressId, paymentDetailsId) => {
+    try 
     {
-        const getAllProducts = await LockedProductModel.find({sessionId:sessionId}) ;
-        if( !getAllProducts.length ) return { success : false , message : ORDER_MESSAGE.FAILED_TO_GET_PRODUCT_DETAIL } ;
-        return { success : true , message : ORDER_MESSAGE.SUCCESSFULLY_FETCHED_PRODUCT_DETAIL , data : getAllProducts } ;
-    }
-    catch(error)
+        const getAllProducts = await LockedProductModel.aggregate([
+            {
+                $match: { userId: mongoose.Types.ObjectId(userId), sessionId }
+            },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: 'productId',
+                    foreignField: '_id',
+                    as: 'productDetails'
+                }
+            },
+            {
+                $unwind: { path: '$productDetails', preserveNullAndEmptyArrays: true }
+            },
+            {
+                $lookup: {
+                    from: 'productVariations',
+                    localField: 'productVariationId',
+                    foreignField: '_id',
+                    as: 'variationDetails'
+                }
+            },
+            {
+                $unwind: { path: '$variationDetails', preserveNullAndEmptyArrays: true }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    productId: 1,
+                    productVariationId: 1,
+                    quantity: 1,
+                    sessionId: 1,
+                    productDetails: {
+                        _id: 1,
+                        name: 1,
+                        category: 1,
+                    },
+                    variationDetails: {
+                        _id: 1,
+                        price: 1,
+                        color: 1,
+                        size: 1,
+                        stock: 1 ,
+                        weight: 1,
+                        capacity: 1 ,
+                    },
+                    totalPrice: { $multiply: ['$quantity', '$variationDetails.price'] }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    items: { $push: '$$ROOT' },
+                    subtotal: { $sum: '$totalPrice' }
+                }
+            },
+            {
+                $addFields: {
+                    totalItems: { $size: '$items' },
+                    totalPrice: { $sum: '$subtotal' }
+                }
+            }
+        ]);
+
+        if (!getAllProducts.length) return { success: false, message: ORDER_MESSAGE.FAILED_TO_GET_PRODUCT_DETAIL };
+        const orderSummary = getAllProducts[0];
+        const address = await AddressModel.findById(addressId);
+        if (!address) return { success: false, message: ORDER_MESSAGE.ADDRESS_NOT_FOUND };
+        const paymentDetails = await PaymentDetailsModel.findById(paymentDetailsId);
+        if (!paymentDetails) return { success: false, message: ORDER_MESSAGE.PAYMENT_DETAILS_NOT_FOUND };
+        const discount = 0; // Assuming discount is applied later
+        const totalAfterDiscount = orderSummary.subtotal - discount;
+
+        return {
+            success: true,
+            message: ORDER_MESSAGE.SUCCESSFULLY_FETCHED_PRODUCT_DETAIL,
+            data: {
+                items: orderSummary.items,
+                subtotal: orderSummary.subtotal,
+                discount,
+                totalAfterDiscount,
+                totalItems: orderSummary.totalItems,
+                address,
+                paymentDetails
+            }
+        };
+    } 
+    catch (error) 
     {
-        return { success : false , message : error.message } ;
+        return { success: false, message: error.message };
     }
-}
+};
+
 
 
 orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethodId) => {
-    try {
-        const payment = await PaymentModel.findById(paymentMethodId); 
+    try 
+    {
+        const payment = await PaymentModel.findById(paymentMethodId);
         if (payment.paymentMethod !== 'COD') 
         {
             const paymentResult = await paymentService.processPayment(userId, sessionId, payment);
@@ -63,6 +149,7 @@ orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethod
         return { success: false, message: error.message };
     }
 }
+
 
 
 

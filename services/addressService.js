@@ -24,6 +24,19 @@ addressService.addAddressToDb = async( addressDetails ) =>{
     }
 }
 
+addressService.getAddressToDb = async( userId , addressId ) =>{
+    try
+    {
+        const existingAddress = await AddressModel.findOne({_id : addressId , userId : userId }) ;
+        if( !existingAddress ) return {success : false , message : ADDRESS_MESSAGE.NOT_EXIST } ;
+        return {success : true , message : ADDRESS_MESSAGE.ADDED_SUCCESSFULLY , data : existingAddress } ;
+    }
+    catch(error)
+    {
+        return { success : false , message : error.message } ;
+    }
+}
+
 addressService.updateAddressToDb = async( updateAddressDetails ) =>{
     try
     {

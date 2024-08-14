@@ -8,7 +8,7 @@ const productVariationsSchema = new mongoose.Schema({
     weight: { value: { type: Number },  unit: { type: String, enum: ['mg', 'g', 'kg'], default: 'g' } },
     capacity: { value: { type: Number },  unit: { type: String, enum: ['ml', 'l'], default: 'ml' }  },
     color: { type: String }, 
-    material: { type: String }, 
+    // material: { type: String }, 
     dimensions: {
         length: { value: { type: Number },  unit: { type: String, enum: ['cm', 'm'], default: 'cm' }  },
         width: { value: { type: Number },  unit: { type: String, enum: ['cm', 'm'], default: 'cm' } },

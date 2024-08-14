@@ -1,8 +1,8 @@
 
 
 import { LockedProductModel } from "../models/LockedProductModel.js";
-import { ProductModel } from "../models/ProductModel.js";
-import { CHECKOUT_MESSAGE, LOCK_TIMEOUT } from "../utils/constants.js";
+import { ProductVariationsModel } from "../models/ProductModel.js";
+import { CHECKOUT_MESSAGE, LOCK_TIMEOUT, PRODUCTS_MESSAGE } from "../utils/constants.js";
 import { generateSessionId } from "../utils/helperFunctions.js";
 
 
@@ -13,29 +13,31 @@ export const checkoutService = { };
 checkoutService.validateAndLockItems = async (userId, items) => {
     try 
     {
-        const sessionId = generateSessionId(); 
+        // const addToCartResponse = await addToCartService.addProductToCartDb(userId, items);
+        // if (!addToCartResponse.success) return { success: false, message: addToCartResponse.message };
+        const sessionId = generateSessionId();
         for (let item of items) 
         {
-            const product = await ProductModel.findById(item.productId);
-            const variation = product.variations.find(v => v.size === item.productSize && v.color === item.productColor);
-            if (!variation) return { success: false, message: `Variation not found` };
-            if (variation.stock < item.productQuantity) return { success: false, message: `Insufficient stock for product ${product.name}` };
-            await LockedProductModel.updateOne(
-                { productId: product._id, userId, size: item.productSize, color: item.productColor },
+            const productVariation = await ProductVariationsModel.findById(item.productVariationId);
+            if (!productVariation) return { success: false, message: CHECKOUT_MESSAGE.PRODUCT_VARIATION_NOT_FOUND };
+            if (productVariation.stock < item.productQuantity) return { success: false, message: CHECKOUT_MESSAGE.VARIATION_OUT_OF_STOCK };
+
+            await LockedProductModel.findOneAndUpdate(
+                { productId: item.productId, productVariationId: item.productVariationId },
                 { sessionId, quantity: item.productQuantity, expiresAt: new Date(Date.now() + LOCK_TIMEOUT * 1000) },
                 { upsert: true }
             );
-            variation.stock -= item.productQuantity;
-            await product.save();
+
+            productVariation.stock -= item.productQuantity;
+            await productVariation.save();
         }
         return { success: true, sessionId };
-    }
+    } 
     catch (error) 
     {
-        return { success: false, message: "Error processing items" };
+        return { success: false, message: error.message };
     }
 };
-
 
 
 

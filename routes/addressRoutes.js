@@ -26,6 +26,17 @@ export const addressRoutes = [
         controller: addressController.addAddress,
     } ,
     {
+        method: 'get',
+        path: '/getAddress', 
+        schema: {
+            params: Joi.object({
+                addressId: Joi.string().length(24).hex().required(), 
+            }),
+        },
+        auth: true,
+        controller: addressController.getAddress,
+    } ,
+    {
         method: 'put',
         path: '/updateAddress/:addressId', 
         schema: {

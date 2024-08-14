@@ -5,6 +5,8 @@ import { WISHLIST_MESSAGE } from "../utils/constants.js";
 
 export const wishlistService = {};
 
+
+
 wishlistService.addProductToWishlistDb = async (userId, productId) => {
     try 
     {
@@ -18,18 +20,9 @@ wishlistService.addProductToWishlistDb = async (userId, productId) => {
     }
 };
 
-wishlistService.getAllProductFromWishlistDb = async (userId) => {
-    try 
-    {
-        const allProducts = await WishListModel.find({ userId: userId });
-        if (allProducts.length === 0) return { success: true, data: allProducts, message: WISHLIST_MESSAGE.NO_PRODUCT_IN_WISHLIST };
-        return { success: true, data: allProducts, message: WISHLIST_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY };
-    } 
-    catch (error) 
-    {
-        return { success: false, message: WISHLIST_MESSAGE.FAILED_TO_FETCHED_PRODUCTS };
-    }
-};
+
+
+
 
 wishlistService.removeProductFromWishlistDb = async (userId, productId) => {
     try 
@@ -43,6 +36,40 @@ wishlistService.removeProductFromWishlistDb = async (userId, productId) => {
         return { success: false, message: WISHLIST_MESSAGE.FAILED_TO_DELETED_PRODUCTS };
     }
 };
+
+
+
+
+
+
+wishlistService.getAllProductFromWishlistDb = async (userId) => {
+    try 
+    {
+        const allProducts = await WishListModel.aggregate([
+            {
+                $match: { _id: mongoose.Types.ObjectId(userId) }  
+            },
+            {
+                $lookup : {
+                    from : 'products' ,
+                    localField : 'productId' ,
+                    foreignField : '_id' ,
+                    as : "products"
+                }
+            },
+            {
+                $unwind : { path : "$products" , preserveNullAndEmptyArrays: true } ,
+            } ,
+        ]);
+        if (allProducts.length === 0) return { success: true, data: allProducts, message: WISHLIST_MESSAGE.NO_PRODUCT_IN_WISHLIST };
+        return { success: true, data: allProducts, message: WISHLIST_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY };
+    } 
+    catch (error) 
+    {
+        return { success: false, message: WISHLIST_MESSAGE.FAILED_TO_FETCHED_PRODUCTS };
+    }
+};
+
 
 
 
