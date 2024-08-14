@@ -49,11 +49,11 @@ async function expressStartup(app) {
         res.send('Hello, World! This is an e-commerce website');
     });
     allRoutes.forEach(route => {
-        const { method, path, schema = {}, auth = false, controller, file } = route;
+        const { method, path, schema = {}, auth = false, controller, files } = route;
         const middlewares = [];
         if (schema) middlewares.push(validateRequest(schema));
         if (auth) middlewares.push(authenticateToken);
-        if (file) middlewares.push(upload); 
+        if (files) middlewares.push(upload); 
         app[method](path, ...middlewares, handleRequest(controller));
     });
 }
