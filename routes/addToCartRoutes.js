@@ -1,6 +1,6 @@
 
 import Joi from 'joi' ;
-import { addToCartController } from '../controller/addToCartController';
+import { addToCartController } from '../controller/addToCartController.js';
 
 
 export const addToCardRoutes = [

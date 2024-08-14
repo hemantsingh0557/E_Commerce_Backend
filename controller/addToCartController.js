@@ -1,5 +1,5 @@
 
-import { addToCartService } from "../services/addToCartService";
+import { addToCartService } from "../services/addToCardService.js";
 
 
 

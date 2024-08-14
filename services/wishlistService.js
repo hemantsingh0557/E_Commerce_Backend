@@ -1,4 +1,4 @@
-import { WishListModel } from "../models/WishlistModel";
+import { WishListModel } from "../models/WishlistModel.js";
 import { WISHLIST_MESSAGE } from "../utils/constants.js";
 
 
@@ -43,3 +43,22 @@ wishlistService.removeProductFromWishlistDb = async (userId, productId) => {
         return { success: false, message: WISHLIST_MESSAGE.FAILED_TO_DELETED_PRODUCTS };
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

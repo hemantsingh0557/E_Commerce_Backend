@@ -1,6 +1,6 @@
 
 
-import { CHECKOUT_MESSAGE } from "../utils/constants";
+import { CHECKOUT_MESSAGE } from "../utils/constants.js";
 
 
 
@@ -8,42 +8,23 @@ import { CHECKOUT_MESSAGE } from "../utils/constants";
 
 export const checkoutService = { } ;
 
-checkoutService.processOrder = async(userId , items ) =>{
-    try {
-        const orderItems = [] ; 
-        let totalAmount = 0 ; 
-        for (const item of items) 
+checkoutService.validateAndLockItems = async(userId , items ) =>{
+    try 
+    {
+        for (let item of items) 
         {
-            const product = await ProductModel.findById(item.productId) ;
-            if (item.productQuantity > product.stockQuantity) return { success: false, message: `${CHECKOUT_MESSAGE.PRODUCT_STOCK_ISSUE} ${item.productId}` } ; 
-            totalAmount += item.productPrice * item.productQuantity ; 
-            orderItems.push({
-                productId: item.productId,
-                quantity: item.productQuantity,
-                size: item.productSize,
-                color: item.productColor,
-                price: item.productPrice
-            }) ; 
-            product.stockQuantity -= item.productQuantity ; 
-            await product.save() ; 
-            const order = new OrderModel({
-                orderId : 'randowm string of 20 characters' ,
-                userId,
-                productId : item.productId ,
-                productQuantity : item.productQuantity ,
-                totalPrice : item.productPrice * item.productQuantity , 
-                size: item.productSize,
-                color: item.productColor,
-                status: 'Pending' 
-            });
-            await order.save() ; 
+            const product = await ProductModel.findById(item.productId);
+            if(product.stock < item.productQuantity) return { success: false, message: `Insufficient stock for product ${product.name}` };
+            product.stock -= item.productQuantity;
+            await product.save();
         }
-        await AddToCartModel.deleteMany({ userId }) ; 
-        return { success: true, message: CHECKOUT_MESSAGE.ORDER_PLACED_SUCCESSFULLY } ; 
+        const sessionId = generateSessionId();
+        return { success: true, sessionId };
     } 
     catch (error) 
     {
-        return { success: false, message: error.message + CHECKOUT_MESSAGE.FAILED_TO_PLACE_ORDER } ; 
+        console.error("Error in validateAndLockItems:", error);
+        return { success: false, message: "Error processing items" };
     }
 };
 

@@ -1,6 +1,6 @@
 
 import Joi from 'joi' ; 
-import { wishlistController } from '../controller/wishlistController';
+import { wishlistController } from '../controller/wishlistController.js';
 
 
 

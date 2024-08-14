@@ -1,5 +1,5 @@
-import { wishlistService } from "../services/wishlistService";
-import { WISHLIST_MESSAGE } from "../utils/constants";
+import { wishlistService } from "../services/wishlistService.js";
+import { WISHLIST_MESSAGE } from "../utils/constants.js";
 
 
 
