@@ -85,6 +85,19 @@ PRODUCTS_MESSAGE.PRODUCT_FETCHED = "Product details fetched successfully " ;
 
 
 
+export const CHECKOUT_MESSAGE = {} ; 
+
+CHECKOUT_MESSAGE.PRODUCT_STOCK_ISSUE = "Insufficient stock for product." ;
+CHECKOUT_MESSAGE.STOCK_ISSUE = "One or more items are out of stock or not available." ;
+CHECKOUT_MESSAGE.ORDER_PLACED_SUCCESSFULLY = "Your order has been placed successfully." ;
+CHECKOUT_MESSAGE.FAILED_TO_PLACE_ORDER = "There was an error placing your order." ;
+
+
+
+
+
+
+
 
 
 
