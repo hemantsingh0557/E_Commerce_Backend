@@ -1,48 +1,33 @@
-import { addToCartService } from "../services/addToCardService";
+
+import { addToCartService } from "../services/addToCartService";
 
 
 
+const addToCartController = {};
 
+addToCartController.addProductToCart = async (req, res) => {
+    const { userId, cart } = req.body;
+    const addProductToCart = await addToCartService.addProductToCartDb(userId, cart);
 
-const addToCartController = {} ; 
-
-addToCartController.addProductToCart = async(payload) => {
-    let { userId , productId , productQuantity } = payload ; 
-    const addProductToCart = await addToCartService.addProductToCartDb(userId , productId , productQuantity ) ;
-    if( ! addProductToCart.success ) return { statusCode : 400 , data: { message : addProductToCart.message , } } ;
-    const response = { 
-        message : addProductToCart.message ,
-        userId : userId ,
+    if (!addProductToCart.success) {
+        return res.status(400).json({
+            statusCode: 400,
+            data: { message: addProductToCart.message }
+        });
     }
-    return {
-        statusCode : 200 ,
-        data : response ,
-    }
-}
-export {addToCartController} ;
 
+    return res.status(200).json({
+        statusCode: 200,
+        data: {
+            message: addProductToCart.message,
+            userId: userId,
+            successItems: addProductToCart.successItems,
+            errorItems: addProductToCart.errorItems
+        }
+    });
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export { addToCartController };
 
 
 

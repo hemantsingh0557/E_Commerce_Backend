@@ -41,12 +41,40 @@ OTP_MESSAGE.VERIFEID_OTP = "OTP is verified successfully" ;
 
 export const ADD_TO_CART_MESSAGE = {} ;
 
-ADD_TO_CART_MESSAGE.ADD_SUCCESSFULLY  = "Product added to cart successfully" ;
+ADD_TO_CART_MESSAGE.ADD_SUCCESSFULLY = "Product added to cart successfully" ;
 ADD_TO_CART_MESSAGE.INSUFFICIENT_STOCK = "Insufficient stock for the requested quantity" ;
+ADD_TO_CART_MESSAGE.CART_UPDATED_SUCCESSFULLY = "Cart updated successfully" ;
+ADD_TO_CART_MESSAGE.CART_UPDATED_PARTIALLY = "Cart updated partially" ;
+ADD_TO_CART_MESSAGE.FAILED_TO_UPDATE_CART = "Failed to update cart" ;
+ADD_TO_CART_MESSAGE.ITEMS_SUCCESSFULLY_UPDATED = "items were successfully updated." ;
+ADD_TO_CART_MESSAGE.ITEMS_STOCK_ISSUES = "items had stock issues." ;
 
 
 
 
+
+export const WISHLIST_MESSAGE = {} ;
+
+WISHLIST_MESSAGE.ADD_SUCCESSFULLY = "Product added to wishlist successfully" ;
+WISHLIST_MESSAGE.FAILED_TO_ADD = "Failed to add to wishlist" ;
+WISHLIST_MESSAGE.NO_PRODUCT_IN_WISHLIST = "there is no product in the wishlist " ;
+WISHLIST_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY = "successfully fetched all the products from wishlist " ;
+WISHLIST_MESSAGE.FAILED_TO_FETCHED_PRODUCTS = "Some internal error during fetching the product from wishlist " ;
+WISHLIST_MESSAGE.PRODUCT_NOT_FOUND = " product is not found " ;
+WISHLIST_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY = "Product is deleted from teh wishlist successfully " ;
+WISHLIST_MESSAGE.FAILED_TO_DELETED_PRODUCTS = "Some internal error during deleting the product from wishlist " ;
+
+
+
+
+
+
+
+export const PRODUCTS_MESSAGE = {} ; 
+
+PRODUCTS_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY = "Products search successfully" ;
+PRODUCTS_MESSAGE.NO_PRODUCTS_FOUND = "No products found " ;
+PRODUCTS_MESSAGE.PRODUCT_FETCHED = "Product details fetched successfully " ;
 
 
 
