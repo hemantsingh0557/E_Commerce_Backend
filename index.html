@@ -1,0 +1,48 @@
+<form id="productForm" enctype="multipart/form-data">
+    <!-- Product Details -->
+    <input type="text" name="name" placeholder="Product Name" required>
+    <input name="description" placeholder="Description">
+    <input type="text" name="category" placeholder="Category" required>
+    <input type="text" name="tags" placeholder="Tags (comma-separated)">
+    <input type="text" name="warranty" placeholder="Warranty">
+    <input type="text" name="returnPolicy" placeholder="Return Policy">
+    <input type="text" name="brandsName" placeholder="Brand Name">
+    <input type="text" name="material" placeholder="Material">
+    <input type="checkbox" name="inStock" checked> In Stock
+
+    <!-- Variations -->
+    <div id="variations">
+        <!-- Variation 1 -->
+        <div class="variation">
+            <input type="text" name="variations[0][sku]" placeholder="SKU" required>
+            <input type="text" name="variations[0][size]" placeholder="Size (e.g., M)">
+            <input type="text" name="variations[0][color]" placeholder="Color">
+            <input type="number" name="variations[0][price]" placeholder="Price" required>
+            <input type="number" name="variations[0][stock]" placeholder="Stock" value="1">
+            <input type="number" name="variations[0][discount]" placeholder="Discount" value="0">
+            <input type="file" name="variations[0][images][]" multiple>
+        </div>
+        <!-- Variation 2 (repeat as needed) -->
+        <div class="variation">
+            <input type="text" name="variations[1][sku]" placeholder="SKU" required>
+            <input type="text" name="variations[1][size]" placeholder="Size (e.g., L)">
+            <input type="text" name="variations[1][color]" placeholder="Color">
+            <input type="number" name="variations[1][price]" placeholder="Price" required>
+            <input type="number" name="variations[1][stock]" placeholder="Stock" value="1">
+            <input type="number" name="variations[1][discount]" placeholder="Discount" value="0">
+            <input type="file" name="variations[1][images][]" multiple>
+        </div>
+        <!-- Variation 3 (repeat as needed) -->
+        <div class="variation">
+            <input type="text" name="variations[2][sku]" placeholder="SKU" required>
+            <input type="text" name="variations[2][size]" placeholder="Size (e.g., L)">
+            <input type="text" name="variations[2][color]" placeholder="Color">
+            <input type="number" name="variations[2][price]" placeholder="Price" required>
+            <input type="number" name="variations[2][stock]" placeholder="Stock" value="1">
+            <input type="number" name="variations[2][discount]" placeholder="Discount" value="0">
+            <input type="file" name="variations[2][images][]" multiple>
+        </div>
+        <!-- Add more variations as needed -->
+    </div>
+    <button type="submit">Add Product</button>
+</form>

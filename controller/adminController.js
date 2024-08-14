@@ -20,11 +20,11 @@ adminController.getProductDetail = async (payload) => {
 
 
 adminController.addProduct = async (payload) => {
-    const productDetailsObject = payload.body;
-    const addNewProduct = await adminService.addProductToDb(productDetailsObject);
+    const { variations, ...productDetailsObject } = payload;
+    const addNewProduct = await adminService.addProductToDb({ ...productDetailsObject, variations });
     if (!addNewProduct.success) return { statusCode: 400, data: { message: addNewProduct.message } };
     const response = {
-        message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_ADDED_SUCCESSFULLY,
+        message: addNewProduct.message,
         data: addNewProduct.data
     };
     return { statusCode: 201, data: response };
@@ -32,10 +32,10 @@ adminController.addProduct = async (payload) => {
 
 
 
-
+// // // need to correct it
 adminController.updateProduct = async (payload) => {
-    const { productId } = payload.params;
-    const updateData = payload.body;
+    const { productId } = payload ;
+    const updateData = payload ;
     const updateResult = await adminService.updateProductInDb(productId, updateData);
     if (!updateResult.success) return { statusCode: 400, data: { message: updateResult.message } };
     const response = {
@@ -53,6 +53,18 @@ adminController.deleteProduct = async (payload) => {
     if( ! deleteProductById.success ) return { statuCode : 400 , data : { message : deleteProductById.message } } ;
     const response = {
         message: deleteProductById.message,
+    };
+    return { statusCode: 200, data: response };
+}
+
+
+
+adminController.deleteProductVariation = async (payload) => {
+    const { productVariationId } = payload ;
+    const deleteProductVariationById = await adminService.deleteProductVariationByIdFromDb(productVariationId) ;
+    if( ! deleteProductVariationById.success ) return { statuCode : 400 , data : { message : deleteProductVariationById.message } } ;
+    const response = {
+        message: deleteProductVariationById.message,
     };
     return { statusCode: 200, data: response };
 }

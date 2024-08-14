@@ -32,7 +32,7 @@ export const productRoutes = [
     },
     {
         method: 'get',
-        path: '/product/:productId',
+        path: '/viewProduct/:productId',
         schema: {
             params: Joi.object({
                 productId: Joi.string().length(24).hex().required(), 

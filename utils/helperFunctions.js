@@ -32,7 +32,7 @@ export function calculateTotalAmount(lockedProducts) {
 
 
 export const generateJWTAccessToken = (jwtPayloadObject)  => {
-    return jwt.sign(jwtPayloadObject, TOKEN_SECRET , { algorithm: 'HS256' , expiresIn: '300s' });
+    return jwt.sign(jwtPayloadObject, TOKEN_SECRET , { algorithm: 'HS256' , expiresIn: '600s' });
 }
 
 

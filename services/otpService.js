@@ -26,7 +26,6 @@ otpService.getUserOtp = async (userId) => {
 
 
 otpService.clearUserOtpObject = async (id) => {
-    console.log( id )
     await otpModel.findOneAndDelete({ _id: id });
 };
 
@@ -90,9 +89,7 @@ otpService.verifyOtp = async(userId , enteredOtp ) => {
     const response = { success: true, message: OTP_MESSAGE.VERIFEID_OTP };
     const otpInDb = await otpService.getUserOtp(userId) ;
     if( !otpInDb ) return { success : false , message : OTP_MESSAGE.EXPIRED_OTP } ;
-    console.log( otpInDb.userOtp , enteredOtp ) ;
     if( otpInDb.userOtp != enteredOtp ) return { success : false , message : OTP_MESSAGE.INVALID_OTP } ;
-    console.log( typeof otpInDb.userOtp , typeof enteredOtp ) ;
     await userService.verfiyUser(userId);
     await otpService.clearUserOtpObject(otpInDb._id);
     return response;

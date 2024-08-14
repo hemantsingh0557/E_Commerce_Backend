@@ -1,8 +1,5 @@
-import { ProductModel } from "../models/ProductModel.js";
+import { ProductModel, ProductVariationsModel } from "../models/ProductModel.js";
 import { ADMIN_ACTIVITY_MESSAGE } from "../utils/constants.js";
-
-
-
 
 
 export const adminService = {} ; 
@@ -17,21 +14,18 @@ adminService.getProductDetailFromDb = async (productId) => {
 adminService.addProductToDb = async (productDetails) => {
     try 
     {
-        const existingVariation = await ProductModel.findOne({ 'variations.sku': productDetails.variations[0].sku });
-        if (existingVariation) {
-            return { success: false, message: ADMIN_ACTIVITY_MESSAGE.SKU_ALREADY_EXISTS.replace('{sku}', productDetails.variations[0].sku) };
-        }
         const newProduct = new ProductModel(productDetails);
         const savedProduct = await newProduct.save();
         return { success: true, message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_ADDED_SUCCESSFULLY, data: savedProduct };
     } 
     catch (error) 
     {
-        return { success: false, message: ADMIN_ACTIVITY_MESSAGE.FAILED_TO_ADD_PRODUCT, error: error.message };
+        return { success: false, message: error.message };
     }
 };
 
 
+// // // need to correct it
 adminService.updateProductInDb = async (productId, updateDetails) => {
     try 
     {
@@ -56,10 +50,32 @@ adminService.updateProductInDb = async (productId, updateDetails) => {
 
 
 adminService.deleteProductFromDb = async (productId) => {
-    const productDetail = await ProductModel.findOneAndDelete({_id : productId }) ;
-    if( !productDetail ) return { success :false  , message : ADMIN_ACTIVITY_MESSAGE.PORDUCT_NOT_FOUND } ;
-    return { success : true , message : ADMIN_ACTIVITY_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY } ;
-}
+    try 
+    {
+        await ProductVariationsModel.deleteMany({ productId: productId });
+        const productDetail = await ProductModel.findByIdAndDelete(productId);
+        if (!productDetail) return { success: false, message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_NOT_FOUND };
+        return { success: true, message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY };
+    } 
+    catch (error) 
+    {
+        return { success: false, message: error.message };
+    }
+};
+
+
+adminService.deleteProductVariationByIdFromDb = async (productVariationId) => {
+    try 
+    {
+        const productVariationDetail = await ProductVariationsModel.findByIdAndDelete(productVariationId);
+        if (!productVariationDetail) return { success: false, message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_NOT_FOUND };
+        return { success: true, message: ADMIN_ACTIVITY_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY };
+    } 
+    catch (error) 
+    {
+        return { success: false, message: error.message };
+    }
+};
 
 
 
