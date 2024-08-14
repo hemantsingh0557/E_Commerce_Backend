@@ -2,7 +2,7 @@
 
 
 
-const RESPONSE_MESSAGE = {} ; 
+export const RESPONSE_MESSAGE = {} ; 
 
 RESPONSE_MESSAGE.USER_EXIST = "Email or mobile number already exists" ;
 RESPONSE_MESSAGE.SIGNED_UP = "New user signed up successfully. Now please verify your OTP" ;
@@ -12,7 +12,6 @@ RESPONSE_MESSAGE.VARIFY_OTP = "Please verify your OTP" ;
 RESPONSE_MESSAGE.SIGNED_IN = "User signed in successfully" ;
 
 
-export {RESPONSE_MESSAGE} ;
 
 
 
@@ -20,7 +19,7 @@ export {RESPONSE_MESSAGE} ;
 
 
 
-const OTP_MESSAGE = {} ;
+export const OTP_MESSAGE = {} ;
 
 OTP_MESSAGE.FAILED_SAVE_OTP = "Otp can't be saved in DB" ;
 OTP_MESSAGE.OTP_SENT = "Otp sent successfully" ;
@@ -31,12 +30,19 @@ OTP_MESSAGE.INVALID_OTP = "Invalid OTP. Please enter the correct OTP" ;
 OTP_MESSAGE.VERIFEID_OTP = "OTP is verified successfully" ;
 
 
-export {OTP_MESSAGE} ;
 
 
 
 
 
+
+
+
+
+export const ADD_TO_CART_MESSAGE = {} ;
+
+ADD_TO_CART_MESSAGE.ADD_SUCCESSFULLY  = "Product added to cart successfully" ;
+ADD_TO_CART_MESSAGE.INSUFFICIENT_STOCK = "Insufficient stock for the requested quantity" ;
 
 
 
