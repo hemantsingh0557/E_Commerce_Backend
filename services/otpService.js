@@ -1,5 +1,6 @@
 import { otpModel } from "../models/otpModel.js";
-import nodemailer from 'nodemailer' ;
+import { OTP_MESSAGE } from "../utils/constants.js";
+import { generateOtp, sendEmail } from "../utils/helperFunctions.js";
 
 
 
@@ -27,39 +28,65 @@ otpService.clearUserOtp = async (userId) => {
 
 
 
-otpService.sendOtp = async(email , mobileNumber , otp ) => {
-    const response = { success: true, message: 'OTP sent successfully' };
-    if (email) {
-        const transporter = nodemailer.createTransport({
-            service: 'yopmail', // Use your email service
-            auth: {
-                user: 'heamntsingh@yopmail.com', // Your email
-                // pass: 'your-email-password' // Your email password
-            }
-        });
-        const mailOptions = {
-            from: 'heamntsingh@yopmail.com',
-            to: email,
-            subject: 'Your OTP Code',
-            text: `Your OTP code is ${otp}. It will expire in 3 minutes.`
-        };
-        try {
-            await transporter.sendMail(mailOptions);
-        } catch (error) {
+otpService.sendOtp = async(userId , email , mobileNumber ) => {
+    const response = { success: true, message: OTP_MESSAGE.OTP_SENT };
+    const otp = generateOtp(); // Generate a 6-digit OTP
+    if (email) 
+    {
+        try
+        {
+            await sendEmail({
+                to: email,
+                subject: 'Your OTP',
+                message: `<p>Your OTP is: <strong>${otp}</strong></p>`,
+            });
+        } 
+        catch (error) 
+        {
             console.error('Error sending email:', error);
             response.success = false;
-            response.message = 'Failed to send OTP via email';
+            response.message = OTP_MESSAGE.FAILED_EMAIL_OTP ;
         }
     }
-    // if (mobileNumber) {
-    //     await sendSms(mobileNumber, `Your OTP code is ${otp}. It will expire in 3 minutes.`);
+
+    // Sending OTP via mobile number
+    // if (mobileNumber) 
+    // {
+    //     try 
+    //     {
+    //         await sendSms(mobileNumber, `Your OTP code is ${otp}. It will expire in 3 minutes.`);
+    //     } 
+    //     catch (error) 
+    //     {
+    //         console.error('Error sending SMS:', error);
+    //         response.success = false;
+    //         response.message = OTP_MESSAGE.FAILED_MOBILE_NUMBER_OTP;
+    //     }
     // }
+    // if (!response.success) response.message = 'Failed to send OTP via email and mobile number';
+    if (response.success) 
+    {
+        try 
+        {
+            await otpService.saveOtpForUser({ userId, otp }); // Save OTP with userId
+        } 
+        catch (error) 
+        {
+            response.success = false;
+            response.message = OTP_MESSAGE.FAILED_SAVE_OTP;
+        }
+    }
     return response;
 }
 
 
-otpService.verifyOtp = async(email , mobileNumber , otp ) => {
-
+otpService.verifyOtp = async(userId , enteredOtp ) => {
+    const response = { success: true, message: OTP_MESSAGE.VERIFEID_OTP };
+    const otpInDb = await otpService.getUserOtp(userId) ;
+    if( !otpInDb ) return { success : false , message : OTP_MESSAGE.EXPIRED_OTP } ;
+    if( otpInDb != enteredOtp ) return { success : false , message : OTP_MESSAGE.INVALID_OTP } ;
+    await otpService.clearUserOtp(user._id);
+    return response ;
 }
 
 

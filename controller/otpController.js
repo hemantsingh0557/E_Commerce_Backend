@@ -1,5 +1,6 @@
 import { otpService } from "../services/otpService.js";
 import { findUserInDB } from "../services/userService.js";
+import { RESPONSE_MESSAGE } from "../utils/constants.js";
 
 
 
@@ -10,23 +11,37 @@ const otpController = {} ;
 
 
 
-otpController.varifyOtp = async (req , res) => {
-    let { email , mobileNumber , enteredOtp } = req.body ; 
+otpController.sentOtp = async (payload) => {
+    let { email , mobileNumber } = payload ; 
     const user = await findUserInDB(email , mobileNumber ); 
-    if( ! user )  return res.status(400).json({ message: "User does not exist " });
-    const otpInDb = otpService.getUserOtp(user._id) ;
-    if( !otpInDb ) return res.status(401).json({ message: "OTP is expired or not found. Please try to resend the OTP" });
-    if( otpInDb != enteredOtp ) res.status(401).json({ message: "Invalid OTP. Please enter the correct OTP" });
-    await otpService.clearUserOtp(user._id);
+    if( ! user )  return { statusCode : 400 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
+    const sentOtp = await otpService.sendOtp(user._id , email, mobileNumber); 
+    if (!sentOtp.success) return { statusCode: 500, data: { message: sentOtp.message } };
+    const response = {
+        message : sentOtp.message ,
+    }
+    return {
+        statusCode: 200,
+        data : response ,
+    };
+}
+
+otpController.varifyOtp = async (payload) => {
+    let { email , mobileNumber , enteredOtp } = payload ; 
+    const user = await findUserInDB(email , mobileNumber ); 
+    if( ! user )  return { statusCode : 400 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
+    const varifyOtp = otpService.verifyOtp( user._id , enteredOtp ) ;
+    if (!varifyOtp.success) return { statusCode: 400, data: { message: varifyOtp.message } };
     const jwtPayloadObject = { _id: user._id, email : user.email, mobileNumber : user.mobileNumber };
     const token = generateJWTAccessToken(jwtPayloadObject) ;
-    res.status(200).json({
-        status: 200,
-        success: true,
-        message: "User signed in successfully",
-        token, 
-        user
-    });
+    const response = {
+        message : sentOtp.message ,
+        token
+    }
+    return {
+        statusCode: 200,
+        data : response ,
+    };
 }
 
 

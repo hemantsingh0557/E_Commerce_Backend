@@ -11,7 +11,7 @@ export const findUserInDB = async(email , mobileNumber ) => {
 }
 
 
-export const savedUser = async (userDetailsObject) => {
+export const saveUser = async (userDetailsObject) => {
     const userDetails = new userModel(userDetailsObject);
     return await userDetails.save(); 
 }

@@ -23,13 +23,17 @@ export const userRoutes = [
         method : "post" ,
         path : "/user/signIn",
         schema : {
-            body : Joi.object({
-                email: Joi.string().email().required(),   
-                password: Joi.string().min(4).required(),
-                // mobileNumber : Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required() ,
-            }).required()
+            body: Joi.alternatives().try(
+                Joi.object({
+                    email: Joi.string().email().required(),
+                    password: Joi.string().min(4).required()
+                }),
+                Joi.object({
+                    mobileNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required()
+                })
+            ).required(),
         } ,
-        auth : true ,
+        auth : false ,
         controller : userController.userSignIn
     }
 

@@ -8,4 +8,3 @@ export const allRoutes = [ ...userRoutes ,  ...otpRoutes ] ;
 
 
 
-

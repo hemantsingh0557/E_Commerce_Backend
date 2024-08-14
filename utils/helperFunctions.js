@@ -1,7 +1,7 @@
 
 
 import jwt from 'jsonwebtoken' ; 
-
+import nodeMailer from 'nodemailer' ;
 
 
 const  TOKEN_SECRET = process.env.TOKEN_SECRET ; 
@@ -43,8 +43,31 @@ export const generateOtp = () => {
 }
 
 
+export const sendEmail = async (options) => {
+    try {
+        const transporter = nodeMailer.createTransport({
+            host: process.env.SMPT_HOST,
+            port: process.env.SMPT_PORT,
+            secure: true, // Use SSL for port 465
+            auth: {
+                user: process.env.SMPT_MAIL,
+                pass: process.env.SMPT_APP_PASS,
+            },
+            authMethod: 'LOGIN', // Specify the authentication method
+        });
 
+        const mailOptions = {
+            from: process.env.SMPT_MAIL,
+            to: options.to,
+            subject: options.subject,
+            html: options.message,
+        };
 
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        throw error; // Rethrow if you want to handle it further up the chain
+    }
+};
 
 
 
