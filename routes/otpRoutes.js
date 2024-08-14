@@ -1,6 +1,7 @@
 
 import Joi from "joi" ;
 import { otpController } from "../controller/otpController.js";
+import mongoose from "mongoose";
 
 
 
@@ -11,23 +12,27 @@ const otpRoutes = [
         method : 'post' ,
         path : '/sendOtp' ,
         schema : {
-            body : Joi.object({
-                email: Joi.string().email().required(), 
-                mobileNumber : Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required() ,
+            body: Joi.object({
+                userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required(),
+                email: Joi.string().email().optional(),
+                mobileNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).optional(),
             })
+            .or('email', 'mobileNumber') 
+            .required()
         } ,
         controller : otpController.sentOtp 
     } ,
     {
-        method : 'post' ,
-        path : '/varifyOtp' ,
-        schema : {
-            body : Joi.object({
-                email: Joi.string().email().required(), 
-            })
-        } ,
-        controller : otpController.varifyOtp 
-    } ,
+        method: 'post',
+        path: '/verifyOtp',
+        schema: {
+            body: Joi.object({
+                userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required(),
+                enteredOtp: Joi.string().pattern(/^[0-9]{6}/).required(),
+            }).required()
+        },
+        controller: otpController.verifyOtp
+    }
 
 ]
 

@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
 import { otpModel } from "../models/otpModel.js";
 import { OTP_MESSAGE } from "../utils/constants.js";
 import { generateOtp, sendEmail } from "../utils/helperFunctions.js";
+import { userService } from "./userService.js";
 
 
 
@@ -9,19 +11,23 @@ const otpService = {} ;
 
 otpService.saveOtpForUser = async (otpObject) => {
     const userOtpObj = new otpModel(otpObject);
-    await userOtpObj.save();
+    // console.log( await userOtpObj.save() )
+    await userOtpObj.save()  ;
+    
 };
 
 
 
 otpService.getUserOtp = async (userId) => {
     const userOtpObj = await otpModel.findOne({userId}) ;
-    return userOtpObj.userOtp ;
+    // console.log( userOtpObj )
+    return userOtpObj ;
 };
 
 
-otpService.clearUserOtp = async (userId) => {
-    otpModel.findOneAndDelete({userId}) ;
+otpService.clearUserOtpObject = async (id) => {
+    console.log( id )
+    await otpModel.findOneAndDelete({ _id: id });
 };
 
 
@@ -30,7 +36,7 @@ otpService.clearUserOtp = async (userId) => {
 
 otpService.sendOtp = async(userId , email , mobileNumber ) => {
     const response = { success: true, message: OTP_MESSAGE.OTP_SENT };
-    const otp = generateOtp(); // Generate a 6-digit OTP
+    const otp = generateOtp(); // Generate a 6-digit OTP in string format
     if (email) 
     {
         try
@@ -43,7 +49,6 @@ otpService.sendOtp = async(userId , email , mobileNumber ) => {
         } 
         catch (error) 
         {
-            console.error('Error sending email:', error);
             response.success = false;
             response.message = OTP_MESSAGE.FAILED_EMAIL_OTP ;
         }
@@ -68,7 +73,8 @@ otpService.sendOtp = async(userId , email , mobileNumber ) => {
     {
         try 
         {
-            await otpService.saveOtpForUser({ userId, otp }); // Save OTP with userId
+            // console.log( userId , " okok " ,  otp ) ;
+            await otpService.saveOtpForUser({ userId : userId,  userOtp : otp }); // Save OTP(string format) with userId
         } 
         catch (error) 
         {
@@ -84,9 +90,12 @@ otpService.verifyOtp = async(userId , enteredOtp ) => {
     const response = { success: true, message: OTP_MESSAGE.VERIFEID_OTP };
     const otpInDb = await otpService.getUserOtp(userId) ;
     if( !otpInDb ) return { success : false , message : OTP_MESSAGE.EXPIRED_OTP } ;
-    if( otpInDb != enteredOtp ) return { success : false , message : OTP_MESSAGE.INVALID_OTP } ;
-    await otpService.clearUserOtp(user._id);
-    return response ;
+    console.log( otpInDb.userOtp , enteredOtp ) ;
+    if( otpInDb.userOtp != enteredOtp ) return { success : false , message : OTP_MESSAGE.INVALID_OTP } ;
+    console.log( typeof otpInDb.userOtp , typeof enteredOtp ) ;
+    await userService.verfiyUser(userId);
+    await otpService.clearUserOtpObject(otpInDb._id);
+    return response;
 }
 
 

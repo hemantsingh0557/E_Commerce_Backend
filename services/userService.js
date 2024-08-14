@@ -3,19 +3,26 @@
 import { userModel } from "../models/userModel.js"
 
 
+const userService = {} ;
 
-
-export const findUserInDB = async(email , mobileNumber ) => {
+userService.findUserInDB = async( email , mobileNumber ) => {
     let user = await userModel.findOne({ $or : [ {email : email } , {mobileNumber :mobileNumber} ] }) ;
     return user ;  
 }
 
 
-export const saveUser = async (userDetailsObject) => {
+userService.saveUser = async (userDetailsObject) => {
     const userDetails = new userModel(userDetailsObject);
     return await userDetails.save(); 
 }
 
+userService.verfiyUser = async (userId) => {
+    await userModel.findOneAndUpdate( { _id: userId }, { isOtpVerified: true }, { new: true } );
+}
+
+
+
+export {userService} ;
 
 
 

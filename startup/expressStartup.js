@@ -2,7 +2,6 @@ import express from "express";
 import { allRoutes } from "../routes/index.js";
 import { validateRequest } from "../utils/helperFunctions.js";
 import { authenticateToken } from "../services/authMiddleware.js";
-import { loggerModel } from "../models/loggerModel.js";
 
 
 const handleRequest = (controller) => {
@@ -11,22 +10,17 @@ const handleRequest = (controller) => {
             ...(req.body || {}),
             ...(req.query || {}),
             ...(req.params || {}),
-            userId: req.userId, 
+            // userId: req.userId, 
             file: req.file, 
         };
+        // console.log( req.body  )
+        // console.log( payload  )
+
         controller(payload)
         .then(async (result) => {
-            // await loggerModel.create({
-            //     action: result.statusCode, 
-            //     message: result.data.message ? result.data.message : "Operation successful", 
-            // });
             res.status(result.statusCode).json(result.data);
         })
         .catch(async (err) => {
-            // await loggerModel.create({
-            //     action: err.statusCode || 500,
-            //     message: err.message || "An error occurred", 
-            // });
             res.status(err.statusCode || 500).json({ message: err.message });
         });
     };
