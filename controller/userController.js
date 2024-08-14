@@ -2,9 +2,8 @@ import { userService } from "../services/userService.js";
 import bcrypt from 'bcrypt' ;
 import { otpService } from "../services/otpService.js";
 import { generateJWTAccessToken, generateOtp } from "../utils/helperFunctions.js";
-import { RESPONSE_MESSAGE } from "../utils/constants.js";
+import { OTP_MESSAGE, RESPONSE_MESSAGE, SALT_ROUNDS } from "../utils/constants.js";
 
-const saltRounds = 10 ;
 
 const userController = { } ;
  
@@ -14,7 +13,7 @@ userController.userSignUp = async (payload) => {
     email = email.toLowerCase();
     const existingUser = await userService.findUserInDB(email, mobileNumber);
     if (existingUser) return { statusCode : 409 , data: { message : RESPONSE_MESSAGE.USER_EXIST , } } ;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const newUserDetails = {
         name: name,
         age: age, 
@@ -70,6 +69,28 @@ userController.userSignIn = async (payload) => {
 };
 
 
+    
+userController.sendOtpForPasswordReset = async (payload) => {
+    let { email , mobileNumber } = payload ;
+    if(email) email = email.toLowerCase() ; 
+    const user = await userService.findUserInDB(email , mobileNumber ); 
+    if( ! user )  return { statusCode : 400 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
+    // const otp = generateOtp();
+    // await otpService.sendOtp(email, otp);
+    // return res.status(200).json({ message: 'OTP sent to your email.' });
+    const response = { message :  OTP_MESSAGE.OTP_SENT , userId : user._id }
+    return { statusCode: 200, data : response  };
+};
+
+
+userController.resetPassword = async (payload) => {
+    const { userId , newPassword } = payload;
+    const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    const resetResult = await userService.resetPasswordInDb(userId, hashedPassword);
+    if (!resetResult.success) return { statusCode : 400 , data: { message : resetResult.message  } }
+    const response = { message :  resetResult.message , userId } ;
+    return { statusCode: 200, data : response  };
+};
 
 
 

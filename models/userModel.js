@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        match: [/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W)/, 'Password must contain at least one letter, one number, and one special character']
     },
     isOtpVerified: {
         type: Boolean,

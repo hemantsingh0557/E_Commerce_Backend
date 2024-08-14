@@ -33,9 +33,9 @@ otpController.sentOtp = async (payload) => {
 otpController.verifyOtp = async (payload) => {
     let { userId , enteredOtp } = payload ; 
     const user = await userService.findUserInDB( userId ); 
-    if( ! user )  return { statusCode : 400 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
+    // if( ! user )  return { statusCode : 404 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
     const varifyOtp = await otpService.verifyOtp( userId , enteredOtp ) ;
-    // if (!varifyOtp.success) return { statusCode: 400, data: { message: varifyOtp.message } };
+    if (!varifyOtp.success) return { statusCode: 400, data: { message: varifyOtp.message } };
     // const jwtPayloadObject = { _id: user._id, email : user.email, mobileNumber : user.mobileNumber };
     const jwtPayloadObject = { userId : userId , userRole : user.userRole };
     const token = generateJWTAccessToken(jwtPayloadObject) ;

@@ -1,5 +1,8 @@
 
 
+export const SALT_ROUNDS = 10 ;
+
+
 export const LOCK_TIMEOUT = 15 * 60 ; // 15 minutes // when user initiate checkout process and if abandons the process
 export const TASK_EXECUTION_INTERVAL = 5 * 60 ; // 5 minutes // check after every 5 minutes if any stocks are locked after 15 minues after user initaite checout
 
@@ -26,6 +29,7 @@ RESPONSE_MESSAGE.USER_NOT_EXIST = "User does not exist " ;
 RESPONSE_MESSAGE.PASSWORD_MISMATCH = "Unauthorized access" ;
 RESPONSE_MESSAGE.VARIFY_OTP = "Please verify your OTP" ;
 RESPONSE_MESSAGE.SIGNED_IN = "User signed in successfully" ;
+RESPONSE_MESSAGE.PASSWORD_RESET = 'Password has been reset successfully.' ;
 
 
 
