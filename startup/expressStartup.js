@@ -1,6 +1,5 @@
 import express from "express";
 import { allRoutes } from "../routes/index.js";
-// import { allRoutes } from "../routes/index.js";
 
 
 

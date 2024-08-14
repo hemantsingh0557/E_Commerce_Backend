@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         type : Number , 
         required:true ,
         min: [10 , 'Age must be a greater than or equal to 10'], 
-        max: [120, 'Age must be less than or equal to 200'] 
+        max: [200, 'Age must be less than or equal to 200'] 
     },
     email : {
         type : String , 
