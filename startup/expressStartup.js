@@ -2,26 +2,26 @@ import express from "express";
 import { allRoutes } from "../routes/index.js";
 import { validateRequest } from "../utils/helperFunctions.js";
 import { authenticateToken } from "../services/authMiddleware.js";
-import cors from 'cors';
-import multer from 'multer';
-import path from 'path';
+import cors from "cors";
+import multer from "multer";
+import path from "path";
 import { authorizeRole } from "../services/authorizeRole.js";
 
 
 
 // Multer storage configuration
 const storage = multer.diskStorage({
-    destination: './public/', // Directory where files will be uploaded
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
+    destination: "./public/", // Directory where files will be uploaded
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+    },
 });
 
 // Multer instance to handle file uploads
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10000000 } // 10MB file size limit per file
-}).array('files', 10); 
+    limits: { fileSize: 10000000 }, // 10MB file size limit per file
+}).array("files", 10); 
 
 
 const handleRequest = (controller) => {
@@ -36,29 +36,37 @@ const handleRequest = (controller) => {
 
         };
         controller(payload)
-        .then(async (result) => {
-            res.status(result.statusCode).json(result.data);
-        })
-        .catch(async (err) => {
-            res.status(err.statusCode || 500).json({ message: err.message });
-        });
+            .then(async(result) => {
+                res.status(result.statusCode).json(result.data);
+            })
+            .catch(async(err) => {
+                res.status(err.statusCode || 500).json({ message: err.message });
+            });
     };
 };
 
 async function expressStartup(app) {
     app.use(express.json());
     app.use(cors());
-    app.use('/public', express.static('public')); 
-    app.get('/', (req, res) => {
-        res.send('Hello, World! This is an e-commerce website');
+    app.use("/public", express.static("public")); 
+    app.get("/", (req, res) => {
+        res.send("Hello, World! This is an e-commerce website");
     });
-    allRoutes.forEach(route => {
+    allRoutes.forEach((route) => {
         const { method, path, schema = {}, auth = false, roles = [], controller, uploadFiles } = route;
         const middlewares = [];
-        if (schema) middlewares.push(validateRequest(schema));
-        if (auth) middlewares.push(authenticateToken);
-        if (roles.length) middlewares.push(authorizeRole(...roles));
-        if (uploadFiles) middlewares.push(upload); 
+        if (schema) {
+            middlewares.push(validateRequest(schema));
+        }
+        if (auth) {
+            middlewares.push(authenticateToken);
+        }
+        if (roles.length) {
+            middlewares.push(authorizeRole(...roles));
+        }
+        if (uploadFiles) {
+            middlewares.push(upload);
+        } 
         app[method](path, ...middlewares, handleRequest(controller));
     });
 }

@@ -6,7 +6,7 @@ import { ERROR_TYPES } from "../utils/constants.js";
 export const paymentController = {};
 
 // Select Payment Method
-paymentController.selectPaymentMethod = async (payload) => {
+paymentController.selectPaymentMethod = async(payload) => {
     const { userId, paymentMethod, paymentDetails } = payload;
     const result = await paymentService.savePaymentMethodDetails(userId, paymentMethod, paymentDetails);
     if (!result.success) {
@@ -16,7 +16,7 @@ paymentController.selectPaymentMethod = async (payload) => {
 };
 
 // Process Payment
-paymentController.processPayment = async (payload) => {
+paymentController.processPayment = async(payload) => {
     const { userId, sessionId, payment } = payload;
     const result = await paymentService.processPayment(userId, sessionId, payment);
     if (!result.success) {

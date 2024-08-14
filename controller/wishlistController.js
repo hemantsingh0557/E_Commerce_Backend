@@ -5,7 +5,7 @@ import { ERROR_TYPES } from "../utils/constants.js";
 
 export const wishlistController = {};
 
-wishlistController.addToWishlist = async (payload) => {
+wishlistController.addToWishlist = async(payload) => {
     const { userId, productId } = payload;
     const result = await wishlistService.addProductToWishlistDb(userId, productId);
     if( !result ) {
@@ -14,14 +14,16 @@ wishlistController.addToWishlist = async (payload) => {
     return createSuccessResponse(RESPONSE_MESSAGE.ADD_SUCCESSFULLY, { userId, productId , result });
 };
 
-wishlistController.removeFromWishlist = async (payload) => {
+wishlistController.removeFromWishlist = async(payload) => {
     const { userId, productId } = payload;
     const removedProduct = await wishlistService.removeProductFromWishlistDb(userId, productId);
-    if (!removedProduct) return createErrorResponse(RESPONSE_MESSAGE.PRODUCT_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+    if (!removedProduct) {
+        return createErrorResponse(RESPONSE_MESSAGE.PRODUCT_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+    }
     return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY, { userId, productId });
 };
 
-wishlistController.getWishlist = async (payload) => {
+wishlistController.getWishlist = async(payload) => {
     const { userId } = payload;
     const allProducts = await wishlistService.getAllProductFromWishlistDb(userId);
     if (allProducts.length === 0) {

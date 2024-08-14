@@ -6,7 +6,7 @@ import { ERROR_TYPES } from "../utils/constants.js";
 export const adminController = {};
 
 // Get Product Detail
-adminController.getProductDetail = async (payload) => {
+adminController.getProductDetail = async(payload) => {
     const { productId } = payload;
 
     const productDetail = await adminService.getProductDetailFromDb(productId);
@@ -17,7 +17,7 @@ adminController.getProductDetail = async (payload) => {
 };
 
 // Add Product
-adminController.addProduct = async (payload) => {
+adminController.addProduct = async(payload) => {
     const { productDetails } = payload;
 
     const newProduct = await adminService.addProductToDb({ productDetails });
@@ -28,7 +28,7 @@ adminController.addProduct = async (payload) => {
 };
 
 // Update Base Product Details
-adminController.updateBaseProductDetails = async (payload) => {
+adminController.updateBaseProductDetails = async(payload) => {
     const { productId, ...updateData } = payload;
 
     const updatedProduct = await adminService.updateBaseProductDetailsInDb(productId, updateData);
@@ -39,7 +39,7 @@ adminController.updateBaseProductDetails = async (payload) => {
 };
 
 // Add Product Variation
-adminController.addProductVariation = async (payload) => {
+adminController.addProductVariation = async(payload) => {
     const { productId, ...variationData } = payload;
 
     const newVariation = await adminService.addProductVariationInDb(productId, variationData);
@@ -50,7 +50,7 @@ adminController.addProductVariation = async (payload) => {
 };
 
 // Update Product Variation
-adminController.updateProductVariation = async (payload) => {
+adminController.updateProductVariation = async(payload) => {
     const { productVariationId, ...updateData } = payload;
 
     const updatedVariation = await adminService.updateProductVariationInDb(productVariationId, updateData);
@@ -61,7 +61,7 @@ adminController.updateProductVariation = async (payload) => {
 };
 
 // Delete Product
-adminController.deleteProduct = async (payload) => {
+adminController.deleteProduct = async(payload) => {
     const { productId } = payload;
 
     const deletedProduct = await adminService.deleteProductFromDb(productId);
@@ -72,7 +72,7 @@ adminController.deleteProduct = async (payload) => {
 };
 
 // Delete Product Variation
-adminController.deleteProductVariation = async (payload) => {
+adminController.deleteProductVariation = async(payload) => {
     const { productVariationId } = payload;
 
     const deletedVariation = await adminService.deleteProductVariationByIdFromDb(productVariationId);

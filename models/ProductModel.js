@@ -2,17 +2,17 @@
 import mongoose from "mongoose";
 
 const productVariationsSchema = new mongoose.Schema({
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
     sku: { type: String, unique: true, required: true },
-    size: { type: String, enum: ['S', 'M', 'L', 'XL', '2XL', '3XL'] }, 
-    weight: { value: { type: Number },  unit: { type: String, enum: ['mg', 'g', 'kg'], default: 'g' } },
-    capacity: { value: { type: Number },  unit: { type: String, enum: ['ml', 'l'], default: 'ml' }  },
+    size: { type: String, enum: ["S", "M", "L", "XL", "2XL", "3XL"] }, 
+    weight: { value: { type: Number }, unit: { type: String, enum: ["mg", "g", "kg"], default: "g" } },
+    capacity: { value: { type: Number }, unit: { type: String, enum: ["ml", "l"], default: "ml" } },
     color: { type: String }, 
     // material: { type: String }, 
     dimensions: {
-        length: { value: { type: Number },  unit: { type: String, enum: ['cm', 'm'], default: 'cm' }  },
-        width: { value: { type: Number },  unit: { type: String, enum: ['cm', 'm'], default: 'cm' } },
-        height: { value: { type: Number },  unit: { type: String, enum: ['cm', 'm'], default: 'cm' } }
+        length: { value: { type: Number }, unit: { type: String, enum: ["cm", "m"], default: "cm" } },
+        width: { value: { type: Number }, unit: { type: String, enum: ["cm", "m"], default: "cm" } },
+        height: { value: { type: Number }, unit: { type: String, enum: ["cm", "m"], default: "cm" } },
     },
     price: { type: Number, required: true },
     stock: { type: Number, default: 1 },
@@ -21,7 +21,7 @@ const productVariationsSchema = new mongoose.Schema({
     inStock: { type: Boolean, default: true },
 } , { timestamps: true } );
 
-const ProductVariationsModel = mongoose.model('ProductVariations', productVariationsSchema);
+const ProductVariationsModel = mongoose.model("ProductVariations", productVariationsSchema);
 export { ProductVariationsModel };
 
 
@@ -36,9 +36,9 @@ const productSchema = new mongoose.Schema({
     material: { type: String },
 }, { timestamps: true });
 
-productSchema.index({ name: 'text', description: 'text' , tags : 'text' });
+productSchema.index({ name: "text", description: "text" , tags : "text" });
 
-const ProductModel = mongoose.model('Product', productSchema);
+const ProductModel = mongoose.model("Product", productSchema);
 export { ProductModel };
 
 

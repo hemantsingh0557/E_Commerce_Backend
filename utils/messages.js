@@ -10,8 +10,8 @@ export const RESPONSE_MESSAGE = {
     PASSWORD_MISMATCH : "Unauthorized access" ,
     VARIFY_OTP : "Please verify your OTP" ,
     SIGNED_IN : "User signed in successfully" ,
-    PASSWORD_RESET_FAILED : 'Failed to reset password .' ,
-    PASSWORD_RESET : 'Password has been reset successfully.' ,
+    PASSWORD_RESET_FAILED : "Failed to reset password ." ,
+    PASSWORD_RESET : "Password has been reset successfully." ,
    
    
     // // otp realted messages
@@ -38,15 +38,15 @@ export const RESPONSE_MESSAGE = {
     
 
     // // wishlist realted messages
-    ADD_SUCCESSFULLY : 'Product added to wishlist successfully.' ,
-    FAILED_TO_ADD : 'Failed to add product to wishlist.' ,
-    NO_PRODUCT_IN_WISHLIST : 'No products found in wishlist.' ,
-    PRODUCTS_FETCHED_SUCCESSFULLY : 'Products fetched successfully.' ,
-    PRODUCT_DELETED_SUCCESSFULLY : 'Product removed from wishlist successfully.' ,
-    FAILED_TO_FETCHED_PRODUCTS : 'Failed to fetch products.' ,
-    FAILED_TO_DELETED_PRODUCTS : 'Failed to remove product from wishlist.' ,
-    PRODUCT_NOT_FOUND : 'Product not found in wishlist.' ,
-    PRODUCT_ALREADY_IN_WISHLIST : 'Product already in wishlist.' ,
+    ADD_SUCCESSFULLY : "Product added to wishlist successfully." ,
+    FAILED_TO_ADD : "Failed to add product to wishlist." ,
+    NO_PRODUCT_IN_WISHLIST : "No products found in wishlist." ,
+    PRODUCTS_FETCHED_SUCCESSFULLY : "Products fetched successfully." ,
+    PRODUCT_DELETED_SUCCESSFULLY : "Product removed from wishlist successfully." ,
+    FAILED_TO_FETCHED_PRODUCTS : "Failed to fetch products." ,
+    FAILED_TO_DELETED_PRODUCTS : "Failed to remove product from wishlist." ,
+    PRODUCT_NOT_FOUND : "Product not found in wishlist." ,
+    PRODUCT_ALREADY_IN_WISHLIST : "Product already in wishlist." ,
     
     
     // // Products realted messages
@@ -80,37 +80,37 @@ export const RESPONSE_MESSAGE = {
     
     
     // // Order realted messages
-    FAILED_TO_GET_ORDER_SUMMARY : 'can not get the order summary ' ,
-    FAILED_TO_GET_PRODUCT_DETAIL : 'can not find product details ' ,
-    SUCCESSFULLY_FETCHED_PRODUCT_DETAIL : 'Fetched product details successfully ' ,
-    ORDER_PLACED_SUCCESSFULLY : 'Order Placed Successfully' ,
+    FAILED_TO_GET_ORDER_SUMMARY : "can not get the order summary " ,
+    FAILED_TO_GET_PRODUCT_DETAIL : "can not find product details " ,
+    SUCCESSFULLY_FETCHED_PRODUCT_DETAIL : "Fetched product details successfully " ,
+    ORDER_PLACED_SUCCESSFULLY : "Order Placed Successfully" ,
     ORDER_NOT_FOUND : "No Order found for this user." ,
     ORDER_FETCHED_SUCCESSFULLY : "Order fetched successfully ." ,
     ORDER_SUMMARY_CREATED_SUCCESSFULLY : "Order summary created successfully ." ,
     
     
     // // Payment realted messages
-    PAYMENT_SUCCESSFULLY : 'Payment successfull ' ,
-    PAYMENT_FAILD : 'Payment failed ' ,
+    PAYMENT_SUCCESSFULLY : "Payment successfull " ,
+    PAYMENT_FAILD : "Payment failed " ,
     
     
     // // Admin realted messages
-    FETCHED_PRODUCT_SUCCESSFULLY : 'Prodcut fetched successfully' ,
-    PRODUCT_DELETED_SUCCESSFULLY : 'Prodcut deleted successfully' ,
-    PRODUCT_ADDED_SUCCESSFULLY : 'Product added successfully' ,
-    FAILED_TO_ADD_PRODUCT : 'Failed to add product' ,
-    FAILED_TO_DELETE_PRODUCT : 'Failed to delete product' ,
-    SKU_ALREADY_EXISTS : 'SKU {sku} already exists' , // Keep this line
-    VARIATION_NOT_FOUND : 'Variation with SKU {sku} not found' ,
-    BASE_PRODUCT_UPDATED_SUCCESSFULLY : 'base product details updated successfully' ,
-    BASE_PRODUCT_NOT_FOUND : 'Base Product not found' ,
-    FAILED_TO_UPDATE_BASE_PRODUCT : 'Failed to update base product details ' ,
+    FETCHED_PRODUCT_SUCCESSFULLY : "Prodcut fetched successfully" ,
+    PRODUCT_DELETED_SUCCESSFULLY : "Prodcut deleted successfully" ,
+    PRODUCT_ADDED_SUCCESSFULLY : "Product added successfully" ,
+    FAILED_TO_ADD_PRODUCT : "Failed to add product" ,
+    FAILED_TO_DELETE_PRODUCT : "Failed to delete product" ,
+    SKU_ALREADY_EXISTS : "SKU {sku} already exists" , // Keep this line
+    VARIATION_NOT_FOUND : "Variation with SKU {sku} not found" ,
+    BASE_PRODUCT_UPDATED_SUCCESSFULLY : "base product details updated successfully" ,
+    BASE_PRODUCT_NOT_FOUND : "Base Product not found" ,
+    FAILED_TO_UPDATE_BASE_PRODUCT : "Failed to update base product details " ,
     PRODUCT_VARIATION_NOT_FOUND : "Product variation not found." ,
     FAILED_TO_UPDATE_PRODUCT_VARIATION : "Failed to update the product variation." ,
     PRODUCT_VARIATION_UPDATED_SUCCESSFULLY : "Product variation updated successfully." ,
     FAILED_TO_ADD_PRODUCT_VARIATION : "Failed to add the product variation." ,
     PRODUCT_VARIATION_ADDED_SUCCESSFULLY : "Product variation added successfully." ,
-    NOT_AUTHORISED : "Forbidden: You do not have the required permissions."  ,
+    NOT_AUTHORISED : "Forbidden: You do not have the required permissions." ,
     
     
     // // files realted messages

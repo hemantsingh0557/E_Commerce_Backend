@@ -1,9 +1,9 @@
 
-import express from 'express';
-import dotenv from 'dotenv';
-import { dbConnection } from './startup/dbConnection.js';
-import { expressStartup } from './startup/expressStartup.js';
-import { startCronJobs } from './utils/tasks/cronJobs.js';
+import express from "express";
+import dotenv from "dotenv";
+import { dbConnection } from "./startup/dbConnection.js";
+import { expressStartup } from "./startup/expressStartup.js";
+import { startCronJobs } from "./utils/tasks/cronJobs.js";
 
 dotenv.config();
 
@@ -21,8 +21,8 @@ startServer().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
     });
-}).catch(error => {
-    console.error('Failed to start the server:', error);
+}).catch((error) => {
+    console.error("Failed to start the server:", error);
 });
 
 

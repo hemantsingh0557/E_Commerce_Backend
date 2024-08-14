@@ -14,6 +14,6 @@ import { wishlistRoutes } from "./wishlistRoutes.js";
 
 
 export const allRoutes = [ ...addressRoutes , ...addToCardRoutes , ...adminRoutes , ...checkoutRoutes , ...fileRoutes , ...orderRoutes , ...otpRoutes ,
-    ...paymentRoutes , ...productRoutes , ...userRoutes , ...wishlistRoutes 
-  ] ; 
+    ...paymentRoutes , ...productRoutes , ...userRoutes , ...wishlistRoutes, 
+] ; 
 

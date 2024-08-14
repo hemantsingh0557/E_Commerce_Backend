@@ -7,7 +7,7 @@ import { ERROR_TYPES } from "../utils/constants.js";
 export const checkoutController = {};
 
 // Initiate Checkout
-checkoutController.initiateCheckout = async (payload) => {
+checkoutController.initiateCheckout = async(payload) => {
     const { userId, items } = payload;
     const result = await checkoutService.validateAndLockItems(userId, items);
     
@@ -19,7 +19,7 @@ checkoutController.initiateCheckout = async (payload) => {
 };
 
 // Leave Checkout
-checkoutController.leaveCheckout = async (payload) => {
+checkoutController.leaveCheckout = async(payload) => {
     const { userId } = payload;
     await restoreProductService.restoreLockedProducts(userId);
     return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_RELEASED_SUCCESSFULLY);

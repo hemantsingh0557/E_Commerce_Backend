@@ -1,0 +1,25 @@
+# Ignore the node_modules directory
+node_modules/
+
+# Ignore build and distribution directories (if applicable)
+dist/
+build/
+
+
+# Ignore environment configuration files
+.env
+
+# Ignore IDE/editor configuration directories and files
+.vscode/
+
+# Ignore other project-specific files
+README.md
+package.json
+package-lock.json
+eslint.config.js
+server.js
+.gitignore
+
+
+
+

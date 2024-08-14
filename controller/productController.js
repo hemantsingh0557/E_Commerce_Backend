@@ -5,15 +5,15 @@ import { createErrorResponse, createSuccessResponse } from "../utils/commonFunct
 
 export const productController = {};
 
-productController.searchProducts = async (payload) => {
+productController.searchProducts = async(payload) => {
     const {
         searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder,
-        brandsName, size, color, material, discount, page, limit, inStock
+        brandsName, size, color, material, discount, page, limit, inStock,
     } = payload;
 
     const { productsResult, totalCount } = await productService.searchProducts({
         searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder,
-        brandsName, size, color, material, discount, page, limit, inStock
+        brandsName, size, color, material, discount, page, limit, inStock,
     });
 
     if (totalCount === 0) {
@@ -23,13 +23,13 @@ productController.searchProducts = async (payload) => {
     const response = {
         message: RESPONSE_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY,
         total: totalCount,
-        productsResult
+        productsResult,
     };
 
     return createSuccessResponse(RESPONSE_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY, response);
 };
 
-productController.viewProduct = async (payload) => {
+productController.viewProduct = async(payload) => {
     const { productId, userId } = payload;
 
     const productDetails = await productService.viewSpecificProduct(productId, userId); // / user id to check if this specific product already in whishlist or not
@@ -40,7 +40,7 @@ productController.viewProduct = async (payload) => {
 
     const response = {
         message: RESPONSE_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY, 
-        productDetails: productDetails[0] 
+        productDetails: productDetails[0], 
     };
 
     return createSuccessResponse(RESPONSE_MESSAGE.PRODUCTS_FETCHED_SUCCESSFULLY, response);

@@ -6,14 +6,14 @@ import { ERROR_TYPES } from "../utils/constants.js";
 export const addressController = {};
 
 // Add Address
-addressController.addAddress = async (payload) => {
+addressController.addAddress = async(payload) => {
     const { userId, ...addressDetails } = payload;
     const addedAddress = await addressService.addAddressToDb({ userId, ...addressDetails });
     return createSuccessResponse(RESPONSE_MESSAGE.ADDRESS_ADDED_SUCCESSFULLY, { userId, address: addedAddress });
 };
 
 // Get Address
-addressController.getAddress = async (payload) => {
+addressController.getAddress = async(payload) => {
     const { userId, addressId } = payload;
     const address = await addressService.getAddressToDb(userId, addressId);
     if (!address) {
@@ -23,7 +23,7 @@ addressController.getAddress = async (payload) => {
 };
 
 // Update Address
-addressController.updateAddress = async (payload) => {
+addressController.updateAddress = async(payload) => {
     const { userId , addressId, ...updateAddressDetails } = payload;
     const updatedAddress = await addressService.updateAddressToDb({ userId , addressId, ...updateAddressDetails });
     if (!updatedAddress) {
@@ -33,8 +33,8 @@ addressController.updateAddress = async (payload) => {
 };
 
 // Remove Address
-addressController.removeAddress = async (payload) => {
-    const { userId , addressId } = payload;
+addressController.removeAddress = async(payload) => {
+    const { userId ,addressId } = payload;
     const removedAddress = await addressService.removeAddressFromDb(addressId);
     if (!removedAddress) {
         return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
@@ -43,7 +43,7 @@ addressController.removeAddress = async (payload) => {
 };
 
 // Get All User Addresses
-addressController.getAllUserAddresses = async (payload) => {
+addressController.getAllUserAddresses = async(payload) => {
     const { userId } = payload;
     const addresses = await addressService.getAllUserAddressesFromDb(userId);
     if (!addresses.length) {

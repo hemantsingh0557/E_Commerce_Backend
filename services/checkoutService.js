@@ -7,16 +7,18 @@ import { generateSessionId } from "../utils/helperFunctions.js";
 export const checkoutService = {};
 
 // Validate and Lock Items
-checkoutService.validateAndLockItems = async (userId, items) => {
+checkoutService.validateAndLockItems = async(userId, items) => {
     const sessionId = generateSessionId();
-    for (let item of items) {
+    for (const item of items) {
         const productVariation = await ProductVariationsModel.findById(item.productVariationId);
-        if (productVariation.stock < item.productQuantity) return { message: RESPONSE_MESSAGE.VARIATION_OUT_OF_STOCK };
+        if (productVariation.stock < item.productQuantity) {
+            return { message: RESPONSE_MESSAGE.VARIATION_OUT_OF_STOCK };
+        }
 
         await LockedProductModel.findOneAndUpdate(
             { productId: item.productId, productVariationId: item.productVariationId },
             { sessionId, quantity: item.productQuantity, expiresAt: new Date(Date.now() + LOCK_TIMEOUT * 1000) },
-            { upsert: true }
+            { upsert: true },
         );
         productVariation.stock -= item.productQuantity;
         await productVariation.save();

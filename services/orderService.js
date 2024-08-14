@@ -5,32 +5,32 @@ import { paymentService } from "./paymentService.js";
 
 export const orderService = {};
 
-orderService.getOrderSummary = async (userId, sessionId, addressId, paymentDetailsId) => {
+orderService.getOrderSummary = async(userId, sessionId, addressId, paymentDetailsId) => {
     const getAllProducts = await LockedProductModel.aggregate([
         {
-            $match: { userId: mongoose.Types.ObjectId(userId), sessionId }
+            $match: { userId: mongoose.Types.ObjectId(userId), sessionId },
         },
         {
             $lookup: {
-                from: 'products',
-                localField: 'productId',
-                foreignField: '_id',
-                as: 'productDetails'
-            }
+                from: "products",
+                localField: "productId",
+                foreignField: "_id",
+                as: "productDetails",
+            },
         },
         {
-            $unwind: { path: '$productDetails', preserveNullAndEmptyArrays: true }
+            $unwind: { path: "$productDetails", preserveNullAndEmptyArrays: true },
         },
         {
             $lookup: {
-                from: 'productVariations',
-                localField: 'productVariationId',
-                foreignField: '_id',
-                as: 'variationDetails'
-            }
+                from: "productVariations",
+                localField: "productVariationId",
+                foreignField: "_id",
+                as: "variationDetails",
+            },
         },
         {
-            $unwind: { path: '$variationDetails', preserveNullAndEmptyArrays: true }
+            $unwind: { path: "$variationDetails", preserveNullAndEmptyArrays: true },
         },
         {
             $project: {
@@ -53,22 +53,22 @@ orderService.getOrderSummary = async (userId, sessionId, addressId, paymentDetai
                     weight: 1,
                     capacity: 1,
                 },
-                totalPrice: { $multiply: ['$quantity', '$variationDetails.price'] }
-            }
+                totalPrice: { $multiply: ["$quantity", "$variationDetails.price"] },
+            },
         },
         {
             $group: {
                 _id: null,
-                items: { $push: '$$ROOT' },
-                subtotal: { $sum: '$totalPrice' }
-            }
+                items: { $push: "$$ROOT" },
+                subtotal: { $sum: "$totalPrice" },
+            },
         },
         {
             $addFields: {
-                totalItems: { $size: '$items' },
-                totalPrice: { $sum: '$subtotal' }
-            }
-        }
+                totalItems: { $size: "$items" },
+                totalPrice: { $sum: "$subtotal" },
+            },
+        },
     ]);
 
     const address = await AddressModel.findById(addressId);
@@ -83,7 +83,7 @@ orderService.getOrderSummary = async (userId, sessionId, addressId, paymentDetai
         totalAfterDiscount,
         totalItems: getAllProducts.length ? getAllProducts[0].totalItems : 0,
         address: address || null,
-        paymentDetails: paymentDetails || null
+        paymentDetails: paymentDetails || null,
     };
 };
 
@@ -96,11 +96,13 @@ function calculateTotalAmount(lockedProducts) {
 
 
 
-orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethodId) => {
+orderService.placeOrderInDb = async(userId, sessionId, addressId, paymentMethodId) => {
     const payment = await PaymentModel.findById(paymentMethodId);
-    if (payment.paymentMethod !== 'COD') {
+    if (payment.paymentMethod !== "COD") {
         const paymentResult = await paymentService.processPayment(userId, sessionId, payment);
-        if (!paymentResult.success) return paymentResult;
+        if (!paymentResult.success) {
+            return paymentResult;
+        }
     }
 
     const lockedProducts = await LockedProductModel.find({ sessionId });
@@ -108,18 +110,18 @@ orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethod
         userId,
         totalAmount: calculateTotalAmount(lockedProducts),
         shippingAddress: addressId,
-        paymentMethod: paymentMethodId
+        paymentMethod: paymentMethodId,
     });
     await newOrder.save();
 
-    const orderItems = lockedProducts.map(product => new OrderItemModel({
+    const orderItems = lockedProducts.map((product) => new OrderItemModel({
         orderId: newOrder._id,
         userId,
         productId: product.productId,
         quantity: product.quantity,
         price: product.price,
         size: product.size,
-        color: product.color
+        color: product.color,
     }));
 
     await OrderItemModel.insertMany(orderItems);
@@ -128,11 +130,11 @@ orderService.placeOrderInDb = async (userId, sessionId, addressId, paymentMethod
     return { orderId: newOrder._id };
 };
 
-orderService.getAllOrdersDetailsFromDb = async (userId, page, limit) => {
+orderService.getAllOrdersDetailsFromDb = async(userId, page, limit) => {
     const getAllOrders = await OrderModel.find({ userId })
         .sort({ orderDate: -1 })
         .skip((page - 1) * limit)
         .limit(parseInt(limit))
-        .populate('orderItems'); // Assuming orderItems is populated
+        .populate("orderItems"); // Assuming orderItems is populated
     return getAllOrders;
 };

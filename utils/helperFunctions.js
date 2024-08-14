@@ -1,14 +1,14 @@
 
 
-import jwt from 'jsonwebtoken' ; 
-import nodeMailer from 'nodemailer' ;
-import dotenv from 'dotenv' ;
-import { v4 as uuidv4 } from 'uuid';
+import jwt from "jsonwebtoken" ; 
+import nodeMailer from "nodemailer" ;
+import dotenv from "dotenv" ;
+import { v4 as uuidv4 } from "uuid";
 
 
 dotenv.config() ;
 
-const  TOKEN_SECRET = process.env.TOKEN_SECRET ; 
+const TOKEN_SECRET = process.env.TOKEN_SECRET ; 
 
 
 export function generateSessionId() {
@@ -16,8 +16,7 @@ export function generateSessionId() {
 }
 
 
-export function generateOrderNumber() 
-{
+export function generateOrderNumber() {
     const timestamp = new Date().getTime(); 
     const randomPart = Math.floor(Math.random() * 10000); 
     return `${timestamp}-${randomPart}`;
@@ -27,9 +26,9 @@ export function generateOrderNumber()
 
 
 
-export const generateJWTAccessToken = (jwtPayloadObject)  => {
-    return jwt.sign(jwtPayloadObject, TOKEN_SECRET , { algorithm: 'HS256' , expiresIn: '600s' });
-}
+export const generateJWTAccessToken = (jwtPayloadObject) => {
+    return jwt.sign(jwtPayloadObject, TOKEN_SECRET , { algorithm: "HS256" , expiresIn: "600s" });
+};
 
 
 export const validateRequest = (schema) => {
@@ -38,7 +37,7 @@ export const validateRequest = (schema) => {
             const { error } = schema.params.validate(req.params);
             if (error) {
                 return res.status(400).json({
-                    error: error.details.map(err => err.message),
+                    error: error.details.map((err) => err.message),
                 });
             }
         }
@@ -46,7 +45,7 @@ export const validateRequest = (schema) => {
             const { error } = schema.body.validate(req.body );
             if (error) {
                 return res.status(400).json({
-                    error: error.details.map(err => err.message),
+                    error: error.details.map((err) => err.message),
                 });
             }
         }
@@ -54,7 +53,7 @@ export const validateRequest = (schema) => {
             const { error } = schema.query.validate(req.query);
             if (error) {
                 return res.status(400).json({
-                    error: error.details.map(err => err.message),
+                    error: error.details.map((err) => err.message),
                 });
             }
         }
@@ -62,7 +61,7 @@ export const validateRequest = (schema) => {
             const { error } = schema.headers.validate(req.headers, { abortEarly: false });
             if (error) {
                 return res.status(400).json({
-                    error: error.details.map(err => err.message),
+                    error: error.details.map((err) => err.message),
                 });
             }
         }
@@ -79,7 +78,7 @@ export const generateOtp = () => {
 };
 
 
-export const sendEmail = async (options) => {
+export const sendEmail = async(options) => {
     try {
         const transporter = nodeMailer.createTransport({
             host: process.env.SMPT_HOST,
@@ -89,7 +88,7 @@ export const sendEmail = async (options) => {
                 user: process.env.SMPT_MAIL,
                 pass: process.env.SMPT_APP_PASS,
             },
-            authMethod: 'LOGIN', // Specify the authentication method
+            authMethod: "LOGIN", // Specify the authentication method
         });
 
         const mailOptions = {

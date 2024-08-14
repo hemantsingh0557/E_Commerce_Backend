@@ -1,13 +1,13 @@
 
-import Joi from 'joi' ;
-import { addressController } from '../controller/addressController.js';
+import Joi from "joi" ;
+import { addressController } from "../controller/addressController.js";
 
 
 
 export const addressRoutes = [
     {
-        method: 'post',
-        path: '/addAddress', 
+        method: "post",
+        path: "/addAddress", 
         schema: {
             body: Joi.object({
                 recepientName : Joi.string().required() ,
@@ -18,15 +18,15 @@ export const addressRoutes = [
                 state: Joi.string().required(),
                 postalCode: Joi.string().pattern(/^[A-Z][0-9]{10}$/).required(), 
                 country: Joi.string().required(),
-                addressType: Joi.string().default('home').required(),
-            })
+                addressType: Joi.string().default("home").required(),
+            }),
         },
         auth: true,
         controller: addressController.addAddress,
     } ,
     {
-        method: 'get',
-        path: '/getAddress/:addressId', 
+        method: "get",
+        path: "/getAddress/:addressId", 
         schema: {
             params: Joi.object({
                 addressId: Joi.string().length(24).hex().required(), 
@@ -36,8 +36,8 @@ export const addressRoutes = [
         controller: addressController.getAddress,
     } ,
     {
-        method: 'put',
-        path: '/updateAddress/:addressId', 
+        method: "put",
+        path: "/updateAddress/:addressId", 
         schema: {
             params: Joi.object({
                 addressId: Joi.string().length(24).hex().required(), 
@@ -51,30 +51,30 @@ export const addressRoutes = [
                 state: Joi.string().optional(),
                 postalCode: Joi.string().pattern(/^[A-Z][0-9]{10}$/).optional(), 
                 country: Joi.string().optional(),
-                addressType: Joi.string().default('home').optional(),
-            })
+                addressType: Joi.string().default("home").optional(),
+            }),
         },
         auth: true,
         controller: addressController.updateAddress,
     } ,
     {
-        method: 'delete',
-        path: '/removeAddress/:addressId',
+        method: "delete",
+        path: "/removeAddress/:addressId",
         schema: {
             params: Joi.object({
                 addressId: Joi.string().length(24).hex().required(), 
-            })
+            }),
         },
         auth: true,
         controller: addressController.removeAddress,
     } ,
     {
-        method: 'get',
-        path: '/getAllUserAddresses', 
+        method: "get",
+        path: "/getAllUserAddresses", 
         auth: true,
         controller: addressController.getAllUserAddresses,
     } ,
-]
+];
 
 
 

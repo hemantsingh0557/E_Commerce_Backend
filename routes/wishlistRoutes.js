@@ -1,6 +1,6 @@
 
-import Joi from 'joi' ; 
-import { wishlistController } from '../controller/wishlistController.js';
+import Joi from "joi" ; 
+import { wishlistController } from "../controller/wishlistController.js";
 
 
 
@@ -9,34 +9,34 @@ import { wishlistController } from '../controller/wishlistController.js';
 
 export const wishlistRoutes = [
     {
-        method : 'post' ,
-        path : '/addToWishlist/:productId' ,
+        method : "post" ,
+        path : "/addToWishlist/:productId" ,
         schema  :{
             body : Joi.object({
-                productId: Joi.string().length(24).hex().required()
-            })
+                productId: Joi.string().length(24).hex().required(),
+            }),
         } ,
         auth : true ,
-        controller : wishlistController.addToWishlist 
+        controller : wishlistController.addToWishlist, 
     } ,
     {
-        method : 'delete' ,
-        path : '/removeFromWishlist/:productId' ,
+        method : "delete" ,
+        path : "/removeFromWishlist/:productId" ,
         schema  :{
             body : Joi.object({
-                productId: Joi.string().length(24).hex().required()
-            })
+                productId: Joi.string().length(24).hex().required(),
+            }),
         } ,
         auth : true ,
-        controller : wishlistController.removeFromWishlist 
+        controller : wishlistController.removeFromWishlist, 
     } ,
     {
-        method : 'get' ,
-        path : '/getWishlist' ,
+        method : "get" ,
+        path : "/getWishlist" ,
         auth : true ,
-        controller : wishlistController.getWishlist 
+        controller : wishlistController.getWishlist, 
     } ,
-]
+];
 
 
 

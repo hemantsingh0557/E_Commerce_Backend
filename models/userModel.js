@@ -1,30 +1,30 @@
 
-import mongoose from 'mongoose' ;
-import { ADMIN, REGULAR_USER } from '../utils/constants.js';
+import mongoose from "mongoose" ;
+import { ADMIN, REGULAR_USER } from "../utils/constants.js";
 
 
 const userSchema = new mongoose.Schema({
     name : {
         type : String , 
-        required:true
+        required:true,
     },
     age : {
         type : Number , 
         required:true ,
-        min: [10 , 'Age must be a greater than or equal to 10'], 
-        max: [200, 'Age must be less than or equal to 200'] 
+        min: [10 , "Age must be a greater than or equal to 10"], 
+        max: [200, "Age must be less than or equal to 200"], 
     },
     email : {
         type : String , 
         required:true , 
         unique:true ,
-        match : [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ , 'Please enter a valid email address '] ,
+        match : [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ , "Please enter a valid email address "] ,
     },
     mobileNumber: {
         type: String, 
         required: true,
         unique: true,
-        match: [/^[6-9]\d{9}$/, 'Please enter a valid mobile number']
+        match: [/^[6-9]\d{9}$/, "Please enter a valid mobile number"],
     },
     password: {
         type: String,
@@ -32,20 +32,20 @@ const userSchema = new mongoose.Schema({
     },
     isOtpVerified: {
         type: Boolean,
-        required: true
+        required: true,
     } ,
     userRole :{
         type : String ,
         enum: [ ADMIN , REGULAR_USER ],
         default : REGULAR_USER ,
-    }
+    },
 
-} , {timestamps : true } )
+} , { timestamps : true } );
 
 
 const userModel = mongoose.model( "users" , userSchema) ;   
 
-export {userModel} ; 
+export { userModel } ; 
 
 
 

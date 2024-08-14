@@ -1,12 +1,12 @@
 
-import Joi from 'joi' ; 
-import { userController } from '../controller/userController.js';
+import Joi from "joi" ; 
+import { userController } from "../controller/userController.js";
 
 
 
 export const userRoutes = [
     {
-        method: 'post',
+        method: "post",
         path : "/user/signUp",
         schema : {
             body : Joi.object({
@@ -14,12 +14,12 @@ export const userRoutes = [
                 age : Joi.number().min(10).max(100) ,
                 email: Joi.string().email().required(), 
                 mobileNumber : Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required() ,
-                password: Joi.string().min(4).required(),   // // match: [/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W)/, 'Password must contain at least one letter, one number, and one special character']
+                password: Joi.string().min(4).required(), // // match: [/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W)/, 'Password must contain at least one letter, one number, and one special character']
                 confirmPassword : Joi.ref("password") ,
-            }).required()
+            }).required(),
         },
         auth : false ,
-        controller : userController.userSignUp
+        controller : userController.userSignUp,
     },
     {
         method : "post" ,
@@ -28,15 +28,15 @@ export const userRoutes = [
             body: Joi.alternatives().try(
                 Joi.object({
                     email: Joi.string().email().required(),
-                    password: Joi.string().min(4).required()
+                    password: Joi.string().min(4).required(),
                 }),
                 Joi.object({
-                    mobileNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required()
-                })
+                    mobileNumber: Joi.string().length(10).pattern(/[6-9]{1}[0-9]{9}/).required(),
+                }),
             ).required(),
         } ,
         auth : false ,
-        controller : userController.userSignIn
+        controller : userController.userSignIn,
     } ,
     // {
     //     method : "put" ,
@@ -56,11 +56,11 @@ export const userRoutes = [
         schema: {
             body: Joi.object({
                 newPassword: Joi.string().min(4).required(),
-                confirmPassword: Joi.string().valid(Joi.ref('newPassword')).required()
-            }).required()
+                confirmPassword: Joi.string().valid(Joi.ref("newPassword")).required(),
+            }).required(),
         },
         auth: false,
-        controller: userController.resetPassword
+        controller: userController.resetPassword,
     } ,
 
 ] ;

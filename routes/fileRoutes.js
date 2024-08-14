@@ -1,15 +1,15 @@
 
-import { fileController } from '../controller/fileController.js';
+import { fileController } from "../controller/fileController.js";
 
 
 
 export const fileRoutes = [
     {
-        method: 'post',
-        path: '/uploadFile',
+        method: "post",
+        path: "/uploadFile",
         uploadFiles : true ,
         controller: fileController.uploadFile ,
-    }
+    },
 ];
 
 

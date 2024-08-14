@@ -7,7 +7,7 @@ import { ERROR_TYPES } from "../utils/constants.js";
 export const orderController = {};
 
 // Show Order Summary
-orderController.showOrderSummary = async (payload) => {
+orderController.showOrderSummary = async(payload) => {
     const { userId, sessionId, addressId, paymentDetailsId } = payload;
     const orderSummary = await orderService.getOrderSummary(userId, sessionId, addressId, paymentDetailsId);
     if (!orderSummary) {
@@ -17,7 +17,7 @@ orderController.showOrderSummary = async (payload) => {
 };
 
 // Place Order
-orderController.placeOrder = async (payload) => {
+orderController.placeOrder = async(payload) => {
     const { userId, sessionId, addressId, paymentMethodId } = payload;
     const orderConfirmation = await orderService.placeOrderInDb(userId, sessionId, addressId, paymentMethodId);
     if (!orderConfirmation) {
@@ -27,7 +27,7 @@ orderController.placeOrder = async (payload) => {
 };
 
 // Get All Orders
-orderController.getAllOrders = async (payload) => {
+orderController.getAllOrders = async(payload) => {
     const { userId, page = 1, limit = 10 } = payload;
     const orders = await orderService.getAllOrdersDetailsFromDb(userId, page, limit);
     if (!orders.length) {

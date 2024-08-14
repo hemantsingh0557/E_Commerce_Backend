@@ -8,7 +8,7 @@ import { createErrorResponse, createSuccessResponse } from "../utils/commonFunct
 export const otpController = {};
 
 // Send OTP
-otpController.sendOtp = async (payload) => {
+otpController.sendOtp = async(payload) => {
     const { userId, email } = payload;
     const user = await userService.findUserByIdInDB(userId);
     if (!user) {
@@ -22,7 +22,7 @@ otpController.sendOtp = async (payload) => {
 };
 
 // Verify OTP
-otpController.verifyOtp = async (payload) => {
+otpController.verifyOtp = async(payload) => {
     const { userId, enteredOtp } = payload;
     const user = await userService.findUserByIdInDB(userId);
     if (!user) {

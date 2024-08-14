@@ -6,25 +6,25 @@ import { addToCartService } from "../services/addToCardService.js";
 export const addToCartController = {};
 
 // Add Product to Cart
-addToCartController.addProductToCart = async (payload) => {
+addToCartController.addProductToCart = async(payload) => {
     const { userId, cartItems } = payload;
     const { successItems, errorItems } = await addToCartService.addProductToCartDb(userId, cartItems);
     
     if (errorItems.length > 0) {
         return createErrorResponse(
             RESPONSE_MESSAGE.CART_UPDATED_PARTIALLY ,
-            ERROR_TYPES.BAD_REQUEST
+            ERROR_TYPES.BAD_REQUEST,
         );
     }
 
     return createSuccessResponse(
         RESPONSE_MESSAGE.CART_UPDATED_SUCCESSFULLY,
-        { userId, successItems, errorItems }
+        { userId, successItems, errorItems },
     );
 };
 
 // Remove Product from Cart
-addToCartController.removeProductFromCart = async (payload) => {
+addToCartController.removeProductFromCart = async(payload) => {
     const { userId, productId, productVariationId } = payload;
     const removedProduct = await addToCartService.removeProductFromCartInDb(userId, productId, productVariationId);
 

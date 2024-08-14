@@ -7,27 +7,27 @@ export const LOCK_TIMEOUT = 15 * 60 ; // 15 minutes // when user initiate checko
 export const TASK_EXECUTION_INTERVAL = 5 * 60 ; // 5 minutes // check after every 5 minutes if any stocks are locked after 15 minues after user initaite checout
 
 
-export const ADMIN = 'Admin'  ;
-export const REGULAR_USER = 'regularUser'  ;
+export const ADMIN = "Admin" ;
+export const REGULAR_USER = "regularUser" ;
 
 
 
 export const ESTIMATE_DAYS = 7 ;
 
-export const ORDER_STATUS = ['Preparing for Shipment', 'Dispatched', 'Out for Delivery', 'Delivered', 'Delivery Failed', 
-    'Returned', 'Return Initiated', 'Return Confirmed', 'Exchange Initiated','Exchange Confirmed','Pickup Pending', 'Pickup Done', 
-    'Exchanged', 'Cancelled', 'Refund Initiated', 'Refund Approved', 'Refund Processing', 'Refund Completed', 'Refund Failed' 
-]
+export const ORDER_STATUS = ["Preparing for Shipment", "Dispatched", "Out for Delivery", "Delivered", "Delivery Failed", 
+    "Returned", "Return Initiated", "Return Confirmed", "Exchange Initiated","Exchange Confirmed","Pickup Pending", "Pickup Done", 
+    "Exchanged", "Cancelled", "Refund Initiated", "Refund Approved", "Refund Processing", "Refund Completed", "Refund Failed", 
+];
 
 
 
 export const ERROR_TYPES = {
-    DATA_NOT_FOUND: 'DATA_NOT_FOUND',
-    BAD_REQUEST: 'BAD_REQUEST',
-    ALREADY_EXISTS: 'ALREADY_EXISTS',
-    FORBIDDEN: 'FORBIDDEN',
-    INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
-    UNAUTHORIZED: 'UNAUTHORIZED',
+    DATA_NOT_FOUND: "DATA_NOT_FOUND",
+    BAD_REQUEST: "BAD_REQUEST",
+    ALREADY_EXISTS: "ALREADY_EXISTS",
+    FORBIDDEN: "FORBIDDEN",
+    INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+    UNAUTHORIZED: "UNAUTHORIZED",
 };
 
 
