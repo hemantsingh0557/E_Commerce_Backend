@@ -58,7 +58,7 @@ export const validateRequest = (schema) => {
             }
         }
         if (schema.headers) {
-            const { error } = schema.headers.validate(req.headers, { abortEarly: false });
+            const { error } = schema.headers.validate(req.headers );
             if (error) {
                 return res.status(400).json({
                     error: error.details.map((err) => err.message),
@@ -79,29 +79,27 @@ export const generateOtp = () => {
 
 
 export const sendEmail = async(options) => {
-    try {
-        const transporter = nodeMailer.createTransport({
-            host: process.env.SMPT_HOST,
-            port: process.env.SMPT_PORT,
-            secure: true, // Use SSL for port 465
-            auth: {
-                user: process.env.SMPT_MAIL,
-                pass: process.env.SMPT_APP_PASS,
-            },
-            authMethod: "LOGIN", // Specify the authentication method
-        });
 
-        const mailOptions = {
-            from: process.env.SMPT_MAIL,
-            to: options.to,
-            subject: options.subject,
-            html: options.message,
-        };
+    const transporter = nodeMailer.createTransport({
+        host: process.env.SMPT_HOST,
+        port: process.env.SMPT_PORT,
+        secure: true, // Use SSL for port 465
+        auth: {
+            user: process.env.SMPT_MAIL,
+            pass: process.env.SMPT_APP_PASS,
+        },
+        authMethod: "LOGIN", // Specify the authentication method
+    });
 
-        await transporter.sendMail(mailOptions);
-    } catch (error) {
-        throw error; // Rethrow if you want to handle it further up the chain
-    }
+    const mailOptions = {
+        from: process.env.SMPT_MAIL,
+        to: options.to,
+        subject: options.subject,
+        html: options.message,
+    };
+
+    await transporter.sendMail(mailOptions);
+   
 };
 
 

@@ -26,7 +26,7 @@ export const RESPONSE_MESSAGE = {
    
    
     // // ADD_TO_CART  realted messages
-    ADD_SUCCESSFULLY : "Product added to cart successfully" ,
+    ADD_SUCCESSFULLY : "Product added successfully" ,
     INSUFFICIENT_STOCK : "Insufficient stock for the requested quantity" ,
     CART_UPDATED_SUCCESSFULLY : "Cart updated successfully" ,
     CART_UPDATED_PARTIALLY : "Cart updated partially" ,
@@ -38,11 +38,9 @@ export const RESPONSE_MESSAGE = {
     
 
     // // wishlist realted messages
-    ADD_SUCCESSFULLY : "Product added to wishlist successfully." ,
     FAILED_TO_ADD : "Failed to add product to wishlist." ,
     NO_PRODUCT_IN_WISHLIST : "No products found in wishlist." ,
     PRODUCTS_FETCHED_SUCCESSFULLY : "Products fetched successfully." ,
-    PRODUCT_DELETED_SUCCESSFULLY : "Product removed from wishlist successfully." ,
     FAILED_TO_FETCHED_PRODUCTS : "Failed to fetch products." ,
     FAILED_TO_DELETED_PRODUCTS : "Failed to remove product from wishlist." ,
     PRODUCT_NOT_FOUND : "Product not found in wishlist." ,
@@ -63,7 +61,6 @@ export const RESPONSE_MESSAGE = {
     FAILED_TO_PLACE_ORDER : "There was an error placing your order." ,
     PRODUCT_RELEASED_SUCCESSFULLY : "Product stock has been released successfully." ,
     FAILED_TO_RESTORE_PRODUCT : "Failed to restore the product." ,
-    PRODUCT_VARIATION_NOT_FOUND : "Product variation not found " ,
     VARIATION_OUT_OF_STOCK : "Product variation is out of stock " ,
     
     
@@ -83,7 +80,6 @@ export const RESPONSE_MESSAGE = {
     FAILED_TO_GET_ORDER_SUMMARY : "can not get the order summary " ,
     FAILED_TO_GET_PRODUCT_DETAIL : "can not find product details " ,
     SUCCESSFULLY_FETCHED_PRODUCT_DETAIL : "Fetched product details successfully " ,
-    ORDER_PLACED_SUCCESSFULLY : "Order Placed Successfully" ,
     ORDER_NOT_FOUND : "No Order found for this user." ,
     ORDER_FETCHED_SUCCESSFULLY : "Order fetched successfully ." ,
     ORDER_SUMMARY_CREATED_SUCCESSFULLY : "Order summary created successfully ." ,
