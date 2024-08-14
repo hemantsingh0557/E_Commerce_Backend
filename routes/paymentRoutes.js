@@ -1,6 +1,6 @@
 
 import Joi from 'joi' ;
-import { paymentController } from '../controller/paymentController';
+import { paymentController } from '../controller/paymentController.js';
 
 
 

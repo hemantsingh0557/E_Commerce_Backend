@@ -1,4 +1,4 @@
-import { paymentService } from "../services/paymentService";
+import { paymentService } from "../services/paymentService.js";
 
 
 

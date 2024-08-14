@@ -1,6 +1,9 @@
 
 import mongoose from 'mongoose';
-import { ESTIMATE_DAYS, ORDER_STATUS } from '../utils/constants';
+import { ESTIMATE_DAYS, ORDER_STATUS } from '../utils/constants.js';
+
+
+
 
 const orderSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

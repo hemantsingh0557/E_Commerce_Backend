@@ -1,10 +1,10 @@
 
 import Joi from 'joi' ;
-import { orderController } from '../controller/orderController';
+import { orderController } from '../controller/orderController.js';
 
 
 
-export const orderReviewRoutes = [
+export const orderRoutes = [
     {
         method : 'post' ,
         path : '/orderReview' ,

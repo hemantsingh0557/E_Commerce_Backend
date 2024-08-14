@@ -1,9 +1,9 @@
-import { LockedProductModel } from "../models/LockedProductModel";
-import { OrderItemModel, OrderModel } from "../models/OrderModel";
-import { PaymentModel } from "../models/PaymentModel";
-import { ORDER_MESSAGE } from "../utils/constants";
-import { calculateTotalAmount } from "../utils/helperFunctions";
-import { paymentService } from "./paymentService";
+import { LockedProductModel } from "../models/LockedProductModel.js";
+import { OrderItemModel, OrderModel } from "../models/OrderModel.js";
+import { PaymentModel } from "../models/PaymentModel.js";
+import { ORDER_MESSAGE } from "../utils/constants.js";
+import { calculateTotalAmount } from "../utils/helperFunctions.js";
+import { paymentService } from "./paymentService.js";
 
 
 

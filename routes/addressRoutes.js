@@ -1,6 +1,6 @@
 
 import Joi from 'joi' ;
-import { addressController } from '../controller/addressController';
+import { addressController } from '../controller/addressController.js';
 
 
 
