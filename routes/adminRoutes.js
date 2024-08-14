@@ -49,7 +49,7 @@ export const adminRoutes = [
                 })).min(1).required() 
             })
         },
-        auth: false, 
+        auth: true, 
         controller: adminController.addProduct
     } ,
     {
@@ -70,7 +70,7 @@ export const adminRoutes = [
                 material: Joi.string().optional()
             })
         },
-        auth: false,
+        auth: true,
         controller: adminController.updateBaseProductDetails
     },
     {
@@ -99,7 +99,7 @@ export const adminRoutes = [
                 inStock: Joi.boolean().optional()
             })
         },
-        auth: false,
+        auth: true,
         controller: adminController.addProductVariation
     } ,    
     {
@@ -128,7 +128,7 @@ export const adminRoutes = [
                 inStock: Joi.boolean().optional()
             })
         },
-        auth: false,
+        auth: true,
         controller: adminController.updateProductVariation
     } ,    
     {
@@ -139,7 +139,7 @@ export const adminRoutes = [
                 productId : Joi.string().length(24).hex().required() ,
             })
         } ,
-        auth : false ,
+        auth : true ,
         controller : adminController.deleteProduct 
     } ,
     {
@@ -150,7 +150,7 @@ export const adminRoutes = [
                 productVariationId : Joi.string().length(24).hex().required() ,
             })
         } ,
-        auth : false ,
+        auth : true ,
         controller : adminController.deleteProductVariation 
     } ,
 ]
