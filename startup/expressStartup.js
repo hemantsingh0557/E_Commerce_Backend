@@ -29,7 +29,10 @@ const handleRequest = (controller) => {
             ...(req.body || {}),
             ...(req.query || {}),
             ...(req.params || {}),
+            userId : req.user ,
+            userRole : req.role ,
             files: req.files, 
+
         };
         controller(payload)
         .then(async (result) => {

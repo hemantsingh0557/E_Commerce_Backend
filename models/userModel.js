@@ -1,5 +1,6 @@
 
 import mongoose from 'mongoose' ;
+import { ADMIN, REGULAR_USER } from '../utils/constants.js';
 
 
 const userSchema = new mongoose.Schema({
@@ -33,12 +34,17 @@ const userSchema = new mongoose.Schema({
     isOtpVerified: {
         type: Boolean,
         required: true
+    } ,
+    userRole :{
+        type : String ,
+        enum: [ ADMIN , REGULAR_USER ],
+        default : REGULAR_USER ,
     }
+
 } , {timestamps : true } )
 
 
-const userModel = mongoose.model( "users" , userSchema) ;
-
+const userModel = mongoose.model( "users" , userSchema) ;   
 
 export {userModel} ; 
 

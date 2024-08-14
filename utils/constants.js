@@ -4,6 +4,11 @@ export const LOCK_TIMEOUT = 15 * 60 ; // 15 minutes // when user initiate checko
 export const TASK_EXECUTION_INTERVAL = 5 * 60 ; // 5 minutes // check after every 5 minutes if any stocks are locked after 15 minues after user initaite checout
 
 
+export const ADMIN = 'Admin'  ;
+export const REGULAR_USER = 'regularUser'  ;
+
+
+
 export const ESTIMATE_DAYS = 7 ;
 
 export const ORDER_STATUS = ['Preparing for Shipment', 'Dispatched', 'Out for Delivery', 'Delivered', 'Delivery Failed', 
@@ -118,6 +123,7 @@ ADDRESS_MESSAGE.ADDRESS_UPDATED_SUCCESSFULLY = "Address updated successfully." ;
 ADDRESS_MESSAGE.ADDRESS_DELETED_SUCCESSFULLY = "Address deleted successfully." ;
 ADDRESS_MESSAGE.NO_ADDRESS_FOUND = "No address found for this user." ;
 ADDRESS_MESSAGE.FETCHED_ALL_ADDRESSES = "All addresses fetched successfully." ;
+ADDRESS_MESSAGE.USER_MUST_ADMIN = "User must be admin " ;
 
 
 

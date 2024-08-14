@@ -1,4 +1,5 @@
 import { adminService } from "../services/adminService.js";
+import { ADDRESS_MESSAGE, ADMIN } from "../utils/constants.js";
 
 
 
@@ -8,7 +9,8 @@ export const adminController = {} ;
 
 
 adminController.getProductDetail = async (payload) => {
-    const { productId } = payload ;
+    const { userId , userRole , productId } = payload ;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const productDetailById = await adminService.getProductDetailFromDb(productId) ;
     if( ! productDetailById.success ) return { statuCode : 400 , data : { message : productDetailById.message } } ;
     const response = {
@@ -20,7 +22,8 @@ adminController.getProductDetail = async (payload) => {
 
 
 adminController.addProduct = async (payload) => {
-    const { variations, ...productDetailsObject } = payload;
+    const { userId , userRole , variations, ...productDetailsObject } = payload;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const addNewProduct = await adminService.addProductToDb({ ...productDetailsObject, variations });
     if (!addNewProduct.success) return { statusCode: 400, data: { message: addNewProduct.message } };
     const response = {
@@ -32,7 +35,8 @@ adminController.addProduct = async (payload) => {
 
 
 adminController.updateBaseProductDetails = async (payload) => {
-    const { productId, ...updateData } = payload;
+    const { userId , userRole , productId, ...updateData } = payload;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const updateResult = await adminService.updateBaseProductDetailsInDb(productId, updateData);
     if (!updateResult.success) return { statusCode: 400, data: { message: updateResult.message } };
     const response = {
@@ -45,7 +49,8 @@ adminController.updateBaseProductDetails = async (payload) => {
 
 
 adminController.addProductVariation = async (payload) => {
-    const { productId, files, ...updateData } = payload;
+    const { userId , userRole , productId, files, ...updateData } = payload;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const productVariationResult = await adminService.addProductVariationInDb(productId, updateData);
     if (!productVariationResult.success)  return { statusCode: 400, data: { message: productVariationResult.message } };
     const response = { 
@@ -59,7 +64,8 @@ adminController.addProductVariation = async (payload) => {
 
 
 adminController.updateProductVariation = async (payload) => {
-    const { productVariationId , ...updateData } = payload;
+    const { userId , userRole , productVariationId , ...updateData } = payload;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const updateResult = await adminService.updateProductVariationInDb(productVariationId, updateData);
     if (!updateResult.success) return { statusCode: 400, data: { message: updateResult.message } };
     const response = { 
@@ -73,7 +79,8 @@ adminController.updateProductVariation = async (payload) => {
 
 
 adminController.deleteProduct = async (payload) => {
-    const { productId } = payload ;
+    const { userId , userRole , productId } = payload ;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const deleteProductById = await adminService.deleteProductFromDb(productId) ;
     if( ! deleteProductById.success ) return { statuCode : 400 , data : { message : deleteProductById.message } } ;
     const response = {
@@ -85,7 +92,8 @@ adminController.deleteProduct = async (payload) => {
 
 
 adminController.deleteProductVariation = async (payload) => {
-    const { productVariationId } = payload ;
+    const { userId , userRole , productVariationId } = payload ;
+    if( userRole != ADMIN ) return { statuCode : 400 , data : { message : ADDRESS_MESSAGE.USER_MUST_ADMIN } } ;
     const deleteProductVariationById = await adminService.deleteProductVariationByIdFromDb(productVariationId) ;
     if( ! deleteProductVariationById.success ) return { statuCode : 400 , data : { message : deleteProductVariationById.message } } ;
     const response = {

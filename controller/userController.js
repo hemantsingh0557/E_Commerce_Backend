@@ -56,7 +56,7 @@ userController.userSignIn = async (payload) => {
             }
         } ;
     }
-    const jwtPayloadObject = { userId : user._id };
+    const jwtPayloadObject = { userId : user._id , userRole : user.userRole };
     const token = generateJWTAccessToken(jwtPayloadObject) ;
     const response = {
         message :  RESPONSE_MESSAGE.SIGNED_IN ,
