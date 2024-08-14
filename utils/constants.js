@@ -144,19 +144,46 @@ PAYMENT_MESSAGE.PAYMENT_FAILD = 'Payment failed '
 
 
 
-const ADMIN_ACTIVITY_MESSAGE = {};
+export const ADMIN_ACTIVITY_MESSAGE = {};
 ADMIN_ACTIVITY_MESSAGE.FETCHED_PRODUCT_SUCCESSFULLY = 'Prodcut fetched successfully';
 ADMIN_ACTIVITY_MESSAGE.PRODUCT_DELETED_SUCCESSFULLY = 'Prodcut deleted successfully';
 ADMIN_ACTIVITY_MESSAGE.PRODUCT_ADDED_SUCCESSFULLY = 'Product added successfully';
-ADMIN_ACTIVITY_MESSAGE.SKU_ALREADY_EXISTS = 'SKU {sku} already exists'; // Keep this line
 ADMIN_ACTIVITY_MESSAGE.FAILED_TO_ADD_PRODUCT = 'Failed to add product';
 ADMIN_ACTIVITY_MESSAGE.FAILED_TO_DELETE_PRODUCT = 'Failed to delete product';
-ADMIN_ACTIVITY_MESSAGE.PRODUCT_UPDATED_SUCCESSFULLY = 'Product updated successfully';
-ADMIN_ACTIVITY_MESSAGE.PRODUCT_NOT_FOUND = 'Product not found';
-ADMIN_ACTIVITY_MESSAGE.VARIATION_NOT_FOUND = 'Variation with SKU {sku} not found';
-ADMIN_ACTIVITY_MESSAGE.FAILED_TO_UPDATE_PRODUCT = 'Failed to update product';
 
-export { ADMIN_ACTIVITY_MESSAGE };
+ADMIN_ACTIVITY_MESSAGE.SKU_ALREADY_EXISTS = 'SKU {sku} already exists'; // Keep this line
+ADMIN_ACTIVITY_MESSAGE.VARIATION_NOT_FOUND = 'Variation with SKU {sku} not found';
+
+ADMIN_ACTIVITY_MESSAGE.BASE_PRODUCT_UPDATED_SUCCESSFULLY = 'base product details updated successfully';
+ADMIN_ACTIVITY_MESSAGE.BASE_PRODUCT_NOT_FOUND = 'Base Product not found';
+ADMIN_ACTIVITY_MESSAGE.FAILED_TO_UPDATE_BASE_PRODUCT = 'Failed to update base product details ';
+
+
+ADMIN_ACTIVITY_MESSAGE.PRODUCT_VARIATION_NOT_FOUND = "Product variation not found." ;
+ADMIN_ACTIVITY_MESSAGE.FAILED_TO_UPDATE_PRODUCT_VARIATION = "Failed to update the product variation." ;
+ADMIN_ACTIVITY_MESSAGE.PRODUCT_VARIATION_UPDATED_SUCCESSFULLY = "Product variation updated successfully." ;
+
+
+ADMIN_ACTIVITY_MESSAGE.FAILED_TO_ADD_PRODUCT_VARIATION = "Failed to add the product variation." ; 
+ADMIN_ACTIVITY_MESSAGE.PRODUCT_VARIATION_ADDED_SUCCESSFULLY = "Product variation added successfully." ; 
+
+
+
+
+
+
+
+
+
+
+
+export const FILE_MESSAGE = { } ;
+FILE_MESSAGE.FILE_UPLOADED_SUCCESSFULLY = "Files uploaded successfully" ;
+FILE_MESSAGE.FAILED_TO_UPLOAD_FILE = "Failed to upload some files" ;
+FILE_MESSAGE.NO_FILES_PROVIDED = "No files provided" ;
+FILE_MESSAGE.ERROR_DURING_FILE_SAVE = "Error during file save" ;
+
+
 
 
 

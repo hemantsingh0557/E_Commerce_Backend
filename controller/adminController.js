@@ -31,12 +31,9 @@ adminController.addProduct = async (payload) => {
 };
 
 
-
-// // // need to correct it
-adminController.updateProduct = async (payload) => {
-    const { productId } = payload ;
-    const updateData = payload ;
-    const updateResult = await adminService.updateProductInDb(productId, updateData);
+adminController.updateBaseProductDetails = async (payload) => {
+    const { productId, ...updateData } = payload;
+    const updateResult = await adminService.updateBaseProductDetailsInDb(productId, updateData);
     if (!updateResult.success) return { statusCode: 400, data: { message: updateResult.message } };
     const response = {
         message: updateResult.message,
@@ -44,6 +41,34 @@ adminController.updateProduct = async (payload) => {
     };
     return { statusCode: 200, data: response };
 };
+
+
+
+adminController.addProductVariation = async (payload) => {
+    const { productId, files, ...updateData } = payload;
+    const productVariationResult = await adminService.addProductVariationInDb(productId, updateData);
+    if (!productVariationResult.success)  return { statusCode: 400, data: { message: productVariationResult.message } };
+    const response = { 
+        message: productVariationResult.message, 
+        data: productVariationResult.data
+    };
+    return { statusCode: 200, data: response };
+};
+
+
+
+
+adminController.updateProductVariation = async (payload) => {
+    const { productVariationId , ...updateData } = payload;
+    const updateResult = await adminService.updateProductVariationInDb(productVariationId, updateData);
+    if (!updateResult.success) return { statusCode: 400, data: { message: updateResult.message } };
+    const response = { 
+        message: updateResult.message, 
+        data: updateResult.data
+    } ;
+    return { statusCode: 200, data: response };
+};
+
 
 
 

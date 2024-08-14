@@ -52,11 +52,9 @@ export const adminRoutes = [
         auth: false, 
         controller: adminController.addProduct
     } ,
-    // // // need to correct it
-    // // // need to correct it
-    {     
+    {
         method: 'put',
-        path: '/updateProduct/:productId',
+        path: '/updateBaseProductDetails/:productId',
         schema: {
             params: Joi.object({
                 productId: Joi.string().length(24).hex().required()
@@ -69,31 +67,70 @@ export const adminRoutes = [
                 warranty: Joi.string().optional(),
                 returnPolicy: Joi.string().optional(),
                 brandsName: Joi.string().optional(),
-                material: Joi.string().optional(),
-                variations: Joi.array().items(Joi.object({
-                    productVariationId: Joi.string().required(),
-                    sku: Joi.string().optional(),
-                    size: Joi.string().valid('S', 'M', 'L', 'XL', '2XL', '3XL').optional(),
-                    weight: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('mg', 'g', 'kg').optional() }).optional(),
-                    capacity: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('ml', 'l').optional() }).optional(),
-                    color: Joi.string().optional(),
-                    material: Joi.string().optional(),
-                    dimensions: Joi.object({
-                        length: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
-                        width: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
-                        height: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional() ,
-                    }).optional(),
-                    price: Joi.number().optional(),
-                    stock: Joi.number().optional(),
-                    discount: Joi.number().optional(),
-                    images: Joi.array().items(Joi.string()).required(),
-                    inStock: Joi.boolean().optional(),
-                })).required()
+                material: Joi.string().optional()
             })
         },
-        auth: false ,
-        controller: adminController.updateProduct
-    } ,
+        auth: false,
+        controller: adminController.updateBaseProductDetails
+    },
+    {
+        method: 'post',
+        path: '/addProductVariation/:productId',
+        schema: {
+            params: Joi.object({
+                productId: Joi.string().length(24).hex().required()
+            }),
+            body: Joi.object({
+                sku: Joi.string().optional(),
+                size: Joi.string().valid('S', 'M', 'L', 'XL', '2XL', '3XL').optional(),
+                weight: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('mg', 'g', 'kg').optional()  }).optional(),
+                capacity: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('ml', 'l').optional()  }).optional(),
+                color: Joi.string().optional(),
+                material: Joi.string().optional(),
+                dimensions: Joi.object({
+                    length: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                    width: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                    height: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                }).optional(),
+                price: Joi.number().optional(),
+                stock: Joi.number().optional(),
+                discount: Joi.number().optional(),
+                images: Joi.array().items(Joi.string()).min(1).max(10).required(), //  this is the array of images paths
+                inStock: Joi.boolean().optional()
+            })
+        },
+        auth: false,
+        controller: adminController.addProductVariation
+    } ,    
+    {
+        method: 'put',
+        path: '/updateProductVariation/:productVariationId',
+        schema: {
+            params: Joi.object({
+                productVariationId: Joi.string().length(24).hex().required()
+            }),
+            body: Joi.object({
+                sku: Joi.string().optional(),
+                size: Joi.string().valid('S', 'M', 'L', 'XL', '2XL', '3XL').optional(),
+                weight: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('mg', 'g', 'kg').optional()  }).optional(),
+                capacity: Joi.object({  value: Joi.number().optional(),  unit: Joi.string().valid('ml', 'l').optional()  }).optional(),
+                color: Joi.string().optional(),
+                material: Joi.string().optional(),
+                dimensions: Joi.object({
+                    length: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                    width: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                    height: Joi.object({ value: Joi.number().optional(), unit: Joi.string().valid('cm', 'm').optional() }).optional(),
+                }).optional(),
+                price: Joi.number().optional(),
+                stock: Joi.number().optional(),
+                discount: Joi.number().optional(),
+                images: Joi.array().items(Joi.string()).min(1).max(10).required(), //  this is the array of images paths
+                inStock: Joi.boolean().optional()
+            })
+        },
+        auth: false,
+        controller: adminController.updateProductVariation
+    } ,    
     {
         method : 'delete' ,
         path : '/deleteProduct/:productId' ,
