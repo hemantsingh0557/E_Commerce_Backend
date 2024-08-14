@@ -2,10 +2,10 @@
 import Joi from 'joi' ; 
 import { userController } from '../controller/userController.js';
 
-const userRoutes = [
+export const userRoutes = [
     {
-        method : "post" ,
-        path : "user/signUp",
+        method: 'post',
+        path : "/user/signUp",
         schema : {
             body : Joi.object({
                 name: Joi.string().required(),   
@@ -21,7 +21,7 @@ const userRoutes = [
     },
     {
         method : "post" ,
-        path : "user/signIn",
+        path : "/user/signIn",
         schema : {
             body : Joi.object({
                 email: Joi.string().email().required(),   
@@ -36,7 +36,6 @@ const userRoutes = [
 
 ] ;
 
-export {userRoutes} ;
 
 
 

@@ -1,24 +1,20 @@
+
+
 import { userModel } from "../models/userModel.js"
 
 
 
 
-
-
-
-export const checkUserExists = async(email) => {
-    let user = await userModel.findOne({email}) ;
-    if( user ) return true ;
-    return false ;  
+export const findUserInDB = async(email , mobileNumber ) => {
+    let user = await userModel.findOne({ $or : [ {email : email } , {mobileNumber :mobileNumber} ] }) ;
+    return user ;  
 }
 
 
-export const singedUpUser = async(userDetailsObject ) => {
-    const userDetails = new userModel(userDetailsObject) ;
-    await userModel.Save() ;
+export const savedUser = async (userDetailsObject) => {
+    const userDetails = new userModel(userDetailsObject);
+    return await userDetails.save(); 
 }
-
-
 
 
 

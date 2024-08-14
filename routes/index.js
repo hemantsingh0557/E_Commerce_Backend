@@ -1,11 +1,11 @@
 
 
+import { otpRoutes } from "./otpRoutes.js";
 import { userRoutes } from "./userRoutes.js";
 
 
-const allRoutes = [ ...userRoutes ] ; 
+export const allRoutes = [ ...userRoutes ,  ...otpRoutes ] ; 
 
-export { allRoutes } ;
 
 
 

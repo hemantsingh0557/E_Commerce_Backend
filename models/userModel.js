@@ -19,21 +19,25 @@ const userSchema = new mongoose.Schema({
         unique:true ,
         match : [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ , 'Please enter a valid email address '] ,
     },
-    mobileNumber : {
-        type : Number , 
-        required:true , 
-        unique:true ,
-        match :[/^[6-9]{1}[0-9]{9}$/ , 'Please enter a valid mobile number' ] , 
+    mobileNumber: {
+        type: String, 
+        required: true,
+        unique: true,
+        match: [/^[6-9]\d{9}$/, 'Please enter a valid mobile number']
     },
-    password : {
-        type : String , 
-        required:true , 
-        match : [/(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[/W-])/ , 'Password must contain at least one letter, one number, and one special character' ]
+    password: {
+        type: String,
+        required: true,
+        match: [/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W)/, 'Password must contain at least one letter, one number, and one special character']
     },
+    isOtpVerified: {
+        type: Boolean,
+        required: true
+    }
 })
 
 
-const userModel = mongoose.model( "userModel" , userSchema) ;
+const userModel = mongoose.model( "users" , userSchema) ;
 
 
 export {userModel} ; 
