@@ -1,6 +1,6 @@
 
 import { AddToCartModel } from "../models/addToCartModel.js";
-import { ProductModel } from "../models/productModel.js";
+import { ProductModel } from "../models/ProductModel.js";
 import { ADD_TO_CART_MESSAGE } from "../utils/constants.js";
 
 
@@ -11,7 +11,8 @@ addToCartService.addProductToCartDb = async (userId, cart) => {
     let successItems = [];
     let errorItems = [];
 
-    for (let item of cart) {
+    for (let item of cart) 
+    {
         try {
             const product = await ProductModel.findById(item.productId);
             if (item.productQuantity > product.stockQuantity) {

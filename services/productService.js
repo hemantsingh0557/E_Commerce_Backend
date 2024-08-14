@@ -1,6 +1,6 @@
 
 
-import { ProductModel } from "../models/productModel.js";
+import { ProductModel } from "../models/ProductModel.js";
 
 
 export const productService = {};

@@ -1,5 +1,8 @@
 
 
+export const LOCK_TIMEOUT = 15 * 60 ; // 15 minutes // when user initiate checkout process and if abandons the process
+export const TASK_EXECUTION_INTERVAL = 5 * 60 ; // 15 minutes // when user initiate checkout process and if abandons the process
+
 
 
 export const RESPONSE_MESSAGE = {} ; 
@@ -87,13 +90,24 @@ PRODUCTS_MESSAGE.PRODUCT_FETCHED = "Product details fetched successfully " ;
 
 export const CHECKOUT_MESSAGE = {} ; 
 
+CHECKOUT_MESSAGE.INITIATED_SUCCESSFULLY = "Checkout process initiated successfully." ;
 CHECKOUT_MESSAGE.PRODUCT_STOCK_ISSUE = "Insufficient stock for product." ;
 CHECKOUT_MESSAGE.STOCK_ISSUE = "One or more items are out of stock or not available." ;
 CHECKOUT_MESSAGE.ORDER_PLACED_SUCCESSFULLY = "Your order has been placed successfully." ;
 CHECKOUT_MESSAGE.FAILED_TO_PLACE_ORDER = "There was an error placing your order." ;
+CHECKOUT_MESSAGE.PRODUCT_RELEASED_SUCCESSFULLY = "Product stock has been released successfully." ;
+CHECKOUT_MESSAGE.FAILED_TO_RESTORE_PRODUCT = "Failed to restore the product." ;
 
 
 
+export const ADDRESS_MESSAGE = {} ;
+ADDRESS_MESSAGE.ALREADY_EXIST = "Address already exists." ;
+ADDRESS_MESSAGE.ADDED_SUCCESSFULLY = "Address added successfully." ;
+ADDRESS_MESSAGE.NOT_EXIST = "Address not found." ;
+ADDRESS_MESSAGE.ADDRESS_UPDATED_SUCCESSFULLY = "Address updated successfully." ;
+ADDRESS_MESSAGE.ADDRESS_DELETED_SUCCESSFULLY = "Address deleted successfully." ;
+ADDRESS_MESSAGE.NO_ADDRESS_FOUND = "No address found for this user." ;
+ADDRESS_MESSAGE.FETCHED_ALL_ADDRESSES = "All addresses fetched successfully." ;
 
 
 

@@ -3,6 +3,7 @@ import express from  "express" ;
 import dotenv from  "dotenv" ;
 import { dbConnection } from "./startup/dbConnection.js";
 import { expressStartup } from "./startup/expressStartup.js";
+import './tasks/restoreExpiredLocks.js'; // Import and start the background task
 
 
 dotenv.config() ;

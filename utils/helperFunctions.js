@@ -3,10 +3,20 @@
 import jwt from 'jsonwebtoken' ; 
 import nodeMailer from 'nodemailer' ;
 import dotenv from 'dotenv' ;
+import { v4 as uuidv4 } from 'uuid';
+
 
 dotenv.config() ;
 
 const  TOKEN_SECRET = process.env.TOKEN_SECRET ; 
+
+
+export function generateSessionId() {
+    return uuidv4();
+}
+
+
+
 
 
 export const generateJWTAccessToken = (jwtPayloadObject)  => {
