@@ -11,7 +11,6 @@ export const checkoutRoutes = [
         path: '/initiateCheckout',
         schema: {
             body: Joi.object({
-                userId: Joi.string().length(24).hex().required(),
                 items: Joi.array().items(
                     Joi.object({
                         productId: Joi.string().length(24).hex().required(),
@@ -28,12 +27,7 @@ export const checkoutRoutes = [
     },
     {
         method: 'post',
-        path: '/leaveCheckout',
-        schema: {
-            params : Joi.object({
-                userId: Joi.string().length(24).hex().required(),
-            })
-        },
+        path: '/leaveCheckout' ,
         auth: true,
         controller: checkoutController.leaveCheckout,
     },
