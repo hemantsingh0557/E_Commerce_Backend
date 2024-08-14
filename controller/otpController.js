@@ -1,75 +1,36 @@
 import { otpService } from "../services/otpService.js";
 import { userService } from "../services/userService.js";
-import { RESPONSE_MESSAGE } from "../utils/constants.js";
+import { RESPONSE_MESSAGE } from "../utils/messages.js";
 import { generateJWTAccessToken } from "../utils/helperFunctions.js";
+import { ERROR_TYPES } from "../utils/constants.js";
+import { createErrorResponse, createSuccessResponse } from "../utils/commonFunctions/responseUtils.js";
 
+export const otpController = {};
 
-
-
-const otpController = {} ;
-
-
-
-otpController.sentOtp = async (payload) => {
-    let { userId , email , mobileNumber } = payload ; 
-    // console.log( payload  )
-    // console.log(  userId , email , mobileNumber )
-    // const user = await userService.findUserInDB(email , mobileNumber ); 
-    // if( ! user )  return { statusCode : 400 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
-    const sentOtp = await otpService.sendOtp( userId , email, mobileNumber); 
-    if (!sentOtp.success) return { statusCode: 500, data: { message: sentOtp.message } };
-    const response = {
-        message : sentOtp.message ,
-        userId 
+// Send OTP
+otpController.sendOtp = async (payload) => {
+    const { userId, email } = payload;
+    const sentOtp = await otpService.sendOtp(userId, email);
+    if (!sentOtp) {
+        return createErrorResponse(RESPONSE_MESSAGE.FAILED_TO_SEND_OTP, ERROR_TYPES.INTERNAL_SERVER_ERROR);
     }
-    return {
-        statusCode: 200,
-        data : response ,
-    };
-}
+    return createSuccessResponse(RESPONSE_MESSAGE.OTP_SENT_SUCCESSFULLY, { userId });
+};
 
+// Verify OTP
 otpController.verifyOtp = async (payload) => {
-    let { userId , enteredOtp } = payload ; 
-    const user = await userService.findUserInDB( userId ); 
-    // if( ! user )  return { statusCode : 404 , data: { message : RESPONSE_MESSAGE.USER_NOT_EXIST  } } ;
-    const varifyOtp = await otpService.verifyOtp( userId , enteredOtp ) ;
-    if (!varifyOtp.success) return { statusCode: 400, data: { message: varifyOtp.message } };
-    // const jwtPayloadObject = { _id: user._id, email : user.email, mobileNumber : user.mobileNumber };
-    const jwtPayloadObject = { userId : userId , userRole : user.userRole };
-    const token = generateJWTAccessToken(jwtPayloadObject) ;
-    const response = {
-        message : varifyOtp.message ,
-        userId ,
-        token
+    const { userId, enteredOtp } = payload;
+    const user = await userService.findUserInDB(userId);
+    if (!user) {
+        return createErrorResponse(RESPONSE_MESSAGE.USER_NOT_EXIST, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return {
-        statusCode: 200,
-        data : response ,
-    };
-}
 
+    const verifyOtp = await otpService.verifyOtp(userId, enteredOtp);
+    if (!verifyOtp.success) {
+        return createErrorResponse(RESPONSE_MESSAGE.INVALID_OTP, ERROR_TYPES.BAD_REQUEST);
+    }
 
-
-
-export {otpController} ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const jwtPayloadObject = { userId: userId, userRole: user.userRole };
+    const token = generateJWTAccessToken(jwtPayloadObject);
+    return createSuccessResponse(RESPONSE_MESSAGE.OTP_VERIFIED_SUCCESSFULLY, { userId, token });
+};

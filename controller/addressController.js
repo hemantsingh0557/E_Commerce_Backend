@@ -1,96 +1,53 @@
-
 import { addressService } from "../services/addressService.js";
+import { createErrorResponse, createSuccessResponse } from "../utils/commonFunctions/responseUtils.js";
+import { RESPONSE_MESSAGE } from "../utils/messages.js";
+import { ERROR_TYPES } from "../utils/constants.js";
 
+export const addressController = {};
 
+// Add Address
+addressController.addAddress = async (payload) => {
+    const { userId, ...addressDetails } = payload;
+    const addedAddress = await addressService.addAddressToDb({ userId, ...addressDetails });
+    return createSuccessResponse(RESPONSE_MESSAGE.ADDRESS_ADDED_SUCCESSFULLY, { userId, address: addedAddress });
+};
 
-export const  addressController = {} ;
-
-
-
-addressController.addAddress = async (payload) =>{
-    // let { userId , recepientName , mobileNumber , street , landMark , city , state , postalCode , country , addressType } = payload ;  
-    let { userId , ...addressDetails } = payload ;  
-    const addNewAddress = await addressService.addAddressToDb( addressDetails ) ;
-    if( ! addNewAddress.success ) return { statusCode : 400 , data : { message : addNewAddress.message } } ;
-    const response = {
-        message : addNewAddress.message ,
-        userId : userId ,
+// Get Address
+addressController.getAddress = async (payload) => {
+    const { userId, addressId } = payload;
+    const address = await addressService.getAddressToDb(userId, addressId);
+    if (!address) {
+        return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return { statusCode : 201 , data : response } ;
-}
+    return createSuccessResponse(RESPONSE_MESSAGE.ADDRESS_FETCHED_SUCCESSFULLY, { address });
+};
 
-
-addressController.getAddress = async (payload) =>{
-    let { userId , addressId} = payload ; 
-    const getUserAddress = await addressService.getAddressToDb( userId , addressId ) ;
-    if( ! getUserAddress.success ) return { statusCode : 400 , data : { message : getUserAddress.message } } ;
-    const response = {
-        message : getUserAddress.message ,
-        userId : userId ,
+// Update Address
+addressController.updateAddress = async (payload) => {
+    const { addressId, ...updateAddressDetails } = payload;
+    const updatedAddress = await addressService.updateAddressToDb({ addressId, ...updateAddressDetails });
+    if (!updatedAddress) {
+        return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return { statusCode : 201 , data : response } ;
-}
+    return createSuccessResponse(RESPONSE_MESSAGE.ADDRESS_UPDATED_SUCCESSFULLY, { address: updatedAddress });
+};
 
-
-
-
-addressController.updateAddress = async (payload) =>{
-    // let { addressId , userId , recepientName , mobileNumber , street , landMark , city , state , postalCode , country , addressType } = payload ;  
-    let { userId , ...updateAddressDetails } = payload ;  
-    const updateUserAddress = await addressService.updateAddressToDb(updateAddressDetails ) ;
-    if( ! updateUserAddress.success ) return { statusCode : 400 , data : { message : updateUserAddress.message } } ;
-    const response = {
-        message : updateUserAddress.message ,
-        userId : userId ,
+// Remove Address
+addressController.removeAddress = async (payload) => {
+    const { addressId } = payload;
+    const removedAddress = await addressService.removeAddressFromDb(addressId);
+    if (!removedAddress) {
+        return createErrorResponse(RESPONSE_MESSAGE.ADDRESS_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return { statusCode : 200 , data : response } ;
-}
+    return createSuccessResponse(RESPONSE_MESSAGE.ADDRESS_DELETED_SUCCESSFULLY);
+};
 
-
-
-
-addressController.removeAddress = async (payload) =>{
-    let { addressId } = payload ;  
-    const removeUserAddress = await addressService.removeAddressFromDb(addressId ) ;
-    if( ! removeUserAddress.success ) return { statusCode : 400 , data : { message : removeUserAddress.message } } ;
-    const response = {
-        message : removeUserAddress.message ,
-        userId : userId ,
+// Get All User Addresses
+addressController.getAllUserAddresses = async (payload) => {
+    const { userId } = payload;
+    const addresses = await addressService.getAllUserAddressesFromDb(userId);
+    if (!addresses.length) {
+        return createErrorResponse(RESPONSE_MESSAGE.NO_ADDRESS_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
     }
-    return { statusCode : 200 , data : response } ;
-}
-
-
-
-addressController.getAllUserAddresses = async (payload) =>{
-    let { userId } = payload ;  
-    const userAddresses = await addressService.getAllUserAddressesFromDb(userId ) ;
-    if( ! userAddresses.success ) return { statusCode : 400 , data : { message : userAddresses.message } } ;
-    const response = {
-        message : userAddresses.message ,
-        userId : userId ,
-        allUserAddress : userAddresses.data ,
-    }
-    return { statusCode : 200 , data : response } ;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return createSuccessResponse(RESPONSE_MESSAGE.ADDRESSES_FETCHED_SUCCESSFULLY, { addresses });
+};

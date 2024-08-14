@@ -1,108 +1,34 @@
 import { AddressModel } from "../models/AddressModel.js";
-import { ADDRESS_MESSAGE } from "../utils/constants.js";
 
+export const addressService = {};
 
+// Add Address to Database
+addressService.addAddressToDb = async (addressDetails) => {
+    const addressDetailsDoc = new AddressModel(addressDetails);
+    await addressDetailsDoc.save();
+    return addressDetailsDoc;
+};
 
+// Get Address from Database
+addressService.getAddressToDb = async (userId, addressId) => {
+    return await AddressModel.findOne({ _id: addressId, userId });
+};
 
+// Update Address in Database
+addressService.updateAddressToDb = async (updateAddressDetails) => {
+    const { addressId, ...updateData } = updateAddressDetails;
+    return await AddressModel.findByIdAndUpdate(addressId, updateData, { new: true });
+};
 
+// Remove Address from Database
+addressService.removeAddressFromDb = async (addressId) => {
+    return await AddressModel.findByIdAndDelete(addressId);
+};
 
-
-export const addressService = {} ;
-
-
-addressService.addAddressToDb = async( addressDetails ) =>{
-    try
-    {
-        const existingAddress = await AddressModel.findOne(addressDetails) ;
-        if( existingAddress ) return {success : false , message : ADDRESS_MESSAGE.ALREADY_EXIST } ;
-        const addressDetailsDoc = new AddressModel(addressDetails) ;
-        addressDetailsDoc.save() ;
-        return {success : true , message : ADDRESS_MESSAGE.ADDED_SUCCESSFULLY } ;
-    }
-    catch(error)
-    {
-        return { success : false , message : error.message } ;
-    }
-}
-
-addressService.getAddressToDb = async( userId , addressId ) =>{
-    try
-    {
-        const existingAddress = await AddressModel.findOne({_id : addressId , userId : userId }) ;
-        if( !existingAddress ) return {success : false , message : ADDRESS_MESSAGE.NOT_EXIST } ;
-        return {success : true , message : ADDRESS_MESSAGE.ADDED_SUCCESSFULLY , data : existingAddress } ;
-    }
-    catch(error)
-    {
-        return { success : false , message : error.message } ;
-    }
-}
-
-addressService.updateAddressToDb = async( updateAddressDetails ) =>{
-    try
-    {
-        const { addressId, ...updateData } = updateAddressDetails;
-        const updatedAddress = await AddressModel.findByIdAndUpdate(addressId, updateData, { new: true });
-        if(!updatedAddress) return { success: false, message: ADDRESS_MESSAGE.NOT_EXIST };
-        return {success : true , message : ADDRESS_MESSAGE.ADDRESS_UPDATED_SUCCESSFULLY } ;
-    }
-    catch(error)
-    {
-        return { success : false , message : error.message } ;
-    }
-}
-
-
-addressService.removeAddressFromDb = async( addressId ) =>{
-    try
-    {
-        const removeUserAddress = await AddressModel.findByIdAndDelete(addressId);
-        if (!removeUserAddress) return { success: false, message: ADDRESS_MESSAGE.NOT_EXIST };
-        return { success: true, message: ADDRESS_MESSAGE.ADDRESS_DELETED_SUCCESSFULLY };
-    }
-    catch(error)
-    {
-        return { success : false , message : error.message } ;
-    }
-}
-
-
-
-
-addressService.getAllUserAddressesFromDb = async( userId ) =>{
-    try
-    {
-        const getUserAddresses = await AddressModel.find({ userId });
-        if (!getUserAddresses.length) return { success: false, message: ADDRESS_MESSAGE.NO_ADDRESS_FOUND };
-        return { success: true, message: ADDRESS_MESSAGE.FETCHED_ALL_ADDRESSES, data: getUserAddresses };
-    }
-    catch(error)
-    {
-        return { success : false , message : error.message } ;
-    }
-}
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Get All User Addresses from Database
+addressService.getAllUserAddressesFromDb = async (userId) => {
+    return await AddressModel.find({ userId });
+};
 
 
 

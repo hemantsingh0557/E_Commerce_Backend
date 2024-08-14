@@ -73,7 +73,7 @@ export const addressRoutes = [
         path: '/getAllUserAddresses/:userId', 
         schema: {
             params: Joi.object({
-                addressId: Joi.string().length(24).hex().required(), 
+                userId: Joi.string().length(24).hex().required(), 
             })
         },
         auth: true,

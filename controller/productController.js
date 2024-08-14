@@ -1,57 +1,47 @@
 import { productService } from "../services/productService.js";
-import { PRODUCTS_MESSAGE } from "../utils/constants.js";
+import { RESPONSE_MESSAGE } from "../utils/messages.js";
+import { ERROR_TYPES } from "../utils/constants.js";
+import { createErrorResponse, createSuccessResponse } from "../utils/commonFunctions/responseUtils.js";
 
-
-export const productController = {} ; 
-
-
-
+export const productController = {};
 
 productController.searchProducts = async (payload) => {
-    const { searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder, brandsName, size, color, material, discount, page, limit, inStock } = payload;
-    const results = await productService.searchProducts({ searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, 
-        sortOrder, brandsName, size, color, material, discount, page, limit, inStock });
+    const {
+        searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder,
+        brandsName, size, color, material, discount, page, limit, inStock
+    } = payload;
 
-    if (!results.success) return { statusCode: 404, data: { message: results.message } };
+    const { productsResult, totalCount } = await productService.searchProducts({
+        searchText, category, minPrice, maxPrice, minRating, maxRating, sortField, sortOrder,
+        brandsName, size, color, material, discount, page, limit, inStock
+    });
+
+    if (totalCount === 0) {
+        return createErrorResponse(RESPONSE_MESSAGE.NO_PRODUCTS_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+    }
+
     const response = {
-        message: results.message,
-        ...results.data,
+        message: RESPONSE_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY,
+        total: totalCount,
+        productsResult
     };
-    return { statusCode: 200, data: response };
+
+    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCTS_SEARCH_SUCCESSFULLY, response);
 };
 
+productController.viewProduct = async (payload) => {
+    const { productId, userId } = payload;
 
+    const productDetails = await productService.viewSpecificProduct(productId, userId);
 
+    if (!productDetails.length) {
+        return createErrorResponse(RESPONSE_MESSAGE.NO_PRODUCT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+    }
 
-productController.viewProduct = async (payload) => 
-{
-    const { productId, userId } = payload;  
-    const productDetails = await productService.ViewSpecificProduct(productId, userId);
-    if (!productDetails.success) return { statusCode: 400, data: { message: productDetails.message } };
     const response = {
-        message: productDetails.message,
-        productDetails: productDetails.data
+        message: RESPONSE_MESSAGE.PRODUCT_FETCHED_SUCCESSFULLY, 
+        productDetails: productDetails[0] 
     };
-    return { statusCode: 200, data: response };
+
+    return createSuccessResponse(RESPONSE_MESSAGE.PRODUCT_FETCHED_SUCCESSFULLY, response);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

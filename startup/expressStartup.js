@@ -5,6 +5,7 @@ import { authenticateToken } from "../services/authMiddleware.js";
 import cors from 'cors';
 import multer from 'multer';
 import path from 'path';
+import { authorizeRole } from "../services/authorizeRole.js";
 
 
 
@@ -52,15 +53,23 @@ async function expressStartup(app) {
         res.send('Hello, World! This is an e-commerce website');
     });
     allRoutes.forEach(route => {
-        const { method, path, schema = {}, auth = false, controller, files } = route;
+        const { method, path, schema = {}, auth = false, roles = [], controller, files } = route;
         const middlewares = [];
         if (schema) middlewares.push(validateRequest(schema));
         if (auth) middlewares.push(authenticateToken);
+        if (roles.length) middlewares.push(authorizeRole(...roles));
         if (files) middlewares.push(upload); 
         app[method](path, ...middlewares, handleRequest(controller));
     });
 }
 
 export { expressStartup };
+
+
+
+
+
+
+
 
 

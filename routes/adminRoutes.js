@@ -1,6 +1,7 @@
 
 import Joi from 'joi' ;
 import { adminController } from '../controller/adminController.js';
+import { ADMIN } from '../utils/constants.js';
 
 
 
@@ -14,6 +15,7 @@ export const adminRoutes = [
             })
         } ,
         auth : true ,
+        roles : [ADMIN] ,
         controller : adminController.getProductDetail 
     } ,
     {
@@ -50,6 +52,7 @@ export const adminRoutes = [
             })
         },
         auth: true, 
+        roles : [ADMIN] ,
         controller: adminController.addProduct
     } ,
     {
@@ -71,6 +74,7 @@ export const adminRoutes = [
             })
         },
         auth: true,
+        roles : [ADMIN] ,
         controller: adminController.updateBaseProductDetails
     },
     {
@@ -100,6 +104,7 @@ export const adminRoutes = [
             })
         },
         auth: true,
+        roles : [ADMIN] ,
         controller: adminController.addProductVariation
     } ,    
     {
@@ -129,6 +134,7 @@ export const adminRoutes = [
             })
         },
         auth: true,
+        roles : [ADMIN] ,
         controller: adminController.updateProductVariation
     } ,    
     {
@@ -140,6 +146,7 @@ export const adminRoutes = [
             })
         } ,
         auth : true ,
+        roles : [ADMIN] ,
         controller : adminController.deleteProduct 
     } ,
     {
@@ -151,6 +158,7 @@ export const adminRoutes = [
             })
         } ,
         auth : true ,
+        roles : [ADMIN] ,
         controller : adminController.deleteProductVariation 
     } ,
 ]

@@ -1,41 +1,37 @@
-
+import { createErrorResponse, createSuccessResponse } from "../utils/commonFunctions/responseUtils.js";
+import { RESPONSE_MESSAGE } from "../utils/messages.js";
+import { ERROR_TYPES } from "../utils/constants.js";
 import { addToCartService } from "../services/addToCardService.js";
-
-
 
 export const addToCartController = {};
 
-
+// Add Product to Cart
 addToCartController.addProductToCart = async (payload) => {
-    const { userId, cartItems } = payload ;
-    const addProductToUserCart = await addToCartService.addProductToCartDb(userId, cartItems);
+    const { userId, cartItems } = payload;
+    const { successItems, errorItems } = await addToCartService.addProductToCartDb(userId, cartItems);
+    
+    if (errorItems.length > 0) {
+        return createErrorResponse(
+            RESPONSE_MESSAGE.CART_UPDATE_PARTIALLY_SUCCESSFUL,
+            ERROR_TYPES.PARTIAL_SUCCESS
+        );
+    }
 
-    if (!addProductToUserCart.success) return res.status(400).json({ statusCode: 400, data: { message: addProductToUserCart.message } });
-    const response = {
-        message: addProductToUserCart.message,
-        userId: userId,
-        successItems: addProductToUserCart.successItems,
-        errorItems: addProductToUserCart.errorItems
-    } ;
-    return { statusCode: 200 , data: response };
+    return createSuccessResponse(
+        RESPONSE_MESSAGE.CART_UPDATED_SUCCESSFULLY,
+        { userId, successItems, errorItems }
+    );
 };
 
-
-
+// Remove Product from Cart
 addToCartController.removeProductFromCart = async (payload) => {
-    const { userId, productId , productVariationId } = payload ;
-    const removeProductFromUserCart = await addToCartService.removeProductFromCartInDb(userId, productId , productVariationId);
-    if (!removeProductFromUserCart.success) return res.status(400).json({ statusCode: 400, data: { message: removeProductFromUserCart.message } });
-    const response = { message: removeProductFromUserCart.message, userId: userId, } ;
-    return { statusCode: 200 , data: response };
+    const { userId, productId, productVariationId } = payload;
+    const removedProduct = await addToCartService.removeProductFromCartInDb(userId, productId, productVariationId);
+
+    if (!removedProduct) {
+        return createErrorResponse(RESPONSE_MESSAGE.ITEM_NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND);
+    }
+
+    return createSuccessResponse(RESPONSE_MESSAGE.ITEM_REMOVED_SUCCESSFULLY, { userId });
 };
-
-
-
-
-
-
-
-
-
 
